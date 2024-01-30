@@ -11,10 +11,10 @@ from app.promotions.models import Promotion
 from bot.filters.states import Registration
 from app.users.models import TelegramUser as User
 from bot.functions import send_registered_message
+from bot.utils.kbs import contact_kb, language_kb, languages
 
 router = Router()
 
-languages = ("Ozbek tili", "Русский язык")
 
 
 @router.message(Command("start"))
@@ -36,11 +36,8 @@ async def on_start(message: types.Message, command: CommandObject, state: FSMCon
                       "\nПожалуйста, выберите язык\n\n" +
                       description_uz +
                       "\nIltimos, tilni tanlang")
-        markup = ReplyKeyboardBuilder()
-        markup.add(
-            *(KeyboardButton(text=lang) for lang in languages)
-        )
-        await message.answer(hello_text, reply_markup=markup.adjust(2).as_markup(resize_keyboard=True))
+
+        await message.answer(hello_text, reply_markup=language_kb())
         await state.set_state(Registration.language)
         await state.set_data({"promo": promo})
     elif promo is not None:
@@ -77,20 +74,23 @@ async def registration_phone(message: types.Message, state: FSMContext, user: Us
     markup.add(KeyboardButton(text=str(_("Отправить телефон")), request_contact=True))
     await message.answer(str(_("Введите Ваш контактный номер телефона регистрации промо-кода."
                                "В случае выигрыша приза, мы будем связываться с Вами по указанному номеру телефона.")),
-                         reply_markup=markup.adjust(2).as_markup(resize_keyboard=True))
+                         reply_markup=contact_kb())
     await state.set_state(Registration.phone)
 
 
 @router.message(Registration.phone)
 async def registration_finish(message: types.Message, state: FSMContext, user: User):
-    user.phone = message.contact.phone_number
-    await user.asave()
-    data = await state.get_data()
-    promo = data.get("promo")
-    if promo is None:
-        await message.answer(
-            str(_("Вы успешно зарегистрировались в платформе! Отправьте промокод сюда чтобы зарегистрировать его")),
-            reply_markup=ReplyKeyboardRemove())
+    if message.contact:
+        user.phone = message.contact.phone_number
+        await user.asave()
+        data = await state.get_data()
+        promo = data.get("promo")
+        if promo is None:
+            await message.answer(
+                str(_("Вы успешно зарегистрировались в платформе! Отправьте промокод сюда чтобы зарегистрировать его")),
+                reply_markup=ReplyKeyboardRemove())  # TODO: need to change main menu buttons
+        else:
+            await send_registered_message(message, promo)
+        await state.clear()
     else:
-        await send_registered_message(message, promo)
-    await state.clear()
+        await message.answer(str(_("Неправильно отправлен номер. Используйте кнопку ниже")), reply_markup=contact_kb())

@@ -50,11 +50,11 @@ class PromotionCodeAdmin(ExportMixin, admin.ModelAdmin):
     date_hierarchy = 'created_at'
     list_filter = ['promotion']
 
-    def has_add_permission(self, request):
-        return False
-
-    def has_delete_permission(self, request, obj=...):
-        return False
-
-    def has_change_permission(self, request, obj=...):
-        return False
+    # def has_add_permission(self, request):
+    #     return False
+    #
+    # def has_delete_permission(self, request, obj=...):
+    #     return False
+    #
+    # def has_change_permission(self, request, obj=...):
+    #     return False

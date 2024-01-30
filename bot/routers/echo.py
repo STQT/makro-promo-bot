@@ -17,7 +17,9 @@ async def echo_handler(message: types.Message, user: User) -> None:
     """
     ...
     # TODO: check message.text to buttons
-
+    print(message.bot.id)
+    print(message.chat.id)
+    print(message.from_user.id)
     if validate_code(message):
         await send_registered_message(message, message.text)
     else:
