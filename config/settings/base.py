@@ -1,8 +1,10 @@
+import environ
+
+from django.utils.translation import gettext_lazy as _
 """Base settings to build other settings files upon."""
 
 from pathlib import Path
 
-import environ
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # app/
@@ -24,14 +26,17 @@ DEBUG = env.bool("DJANGO_DEBUG", False)
 # In Windows, this must be set to your system time zone.
 TIME_ZONE = "Asia/Tashkent"
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru"
 # https://docs.djangoproject.com/en/dev/ref/settings/#languages
-# from django.utils.translation import gettext_lazy as _
-# LANGUAGES = [
-#     ('en', _('English')),
-#     ('fr-fr', _('French')),
-#     ('pt-br', _('Portuguese')),
-# ]
+LANGUAGES = [
+    ('ru', _('Русский')),
+    ('uz', _('O\'zbek')),
+]
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
+MODELTRANSLATION_LANGUAGES = ('ru', 'uz')
+MODELTRANSLATION_TRANSLATION_FILES = (
+    'app.promotions.translation',
+)
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
@@ -59,6 +64,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 # APPS
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
+    "jazzmin",
+    "modeltranslation",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -77,11 +84,15 @@ THIRD_PARTY_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
     "drf_spectacular",
+    "import_export",
+
 ]
 
 LOCAL_APPS = [
     "app.users",
+    "app.promotions",
     "bot",
+
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -314,3 +325,50 @@ LIFESPAN_CONTEXT = 'config.lifespan.lifespan_context'
 DJANGO_SETTINGS_MODULE = 'config.settings.local' if DEBUG else 'config.settings.production'
 BOT_TOKEN = "6394563338:AAFoLEOnFjebAo6ucE9nTLbpEiKSj9l26iI"
 BOT_WEBHOOK_PATH = "bot_process_updates"
+
+JAZZMIN_SETTINGS = {
+    "navigation_expanded": True,
+    "related_modal_active": True,
+    "changeform_format": "vertical",
+    "show_sidebar": True,
+}
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": True,
+    "footer_small_text": True,
+    "body_small_text": True,
+    "brand_small_text": True,
+    "brand_colour": "navbar-dark",
+    "accent": "accent-primary",
+    "navbar": "navbar-gray-dark navbar-dark",
+    "no_navbar_border": True,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-dark-info",
+    "sidebar_nav_small_text": True,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": True,
+    "sidebar_nav_flat_style": True,
+    "theme": "minty",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    },
+    "actions_sticky_top": True,
+    "custom_links": {
+        "ChannelsAdmin": [{
+            "name": "Channel",
+            "icon": "fas fa-phone",
+
+    }]
+},
+}
+X_FRAME_OPTIONS = 'ALLOWALL'

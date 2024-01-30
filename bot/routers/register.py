@@ -1,3 +1,5 @@
+from datetime import date
+
 from aiogram import Router, types
 from aiogram.filters import Command, CommandObject
 from aiogram.fsm.context import FSMContext
@@ -5,10 +7,10 @@ from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from django.utils.translation import gettext_lazy as _
 from aiogram.types import KeyboardButton, ReplyKeyboardRemove
 
+from app.promotions.models import Promotion
 from bot.filters.states import Registration
 from app.users.models import TelegramUser as User
 from bot.functions import send_registered_message
-from bot.validators import validate_code
 
 router = Router()
 
@@ -20,23 +22,29 @@ async def on_start(message: types.Message, command: CommandObject, state: FSMCon
     promo = None
     if command.args:
         promo = command.args
-        if validate_code(message, promo) is False:
-            await message.answer(str(_("Ваш промокод неверный! Сканируйте верный QR-код")))
-            return
-    hello_text = ("Вас приветствует бот акции «Купите Vida, выиграйте путевку в Каппадокию!»\n"
-                  "Этот бот поможет Вам в регистрации промо-кодов для участия в розыгрыше!\n"
-                  "Пожалуйста, выберите язык\n\n"
-                  "“Vida xarid qiling, Kapadokyaga sayohat yutib oling!” aksiyasi botiga xush kelibsiz.\n"
-                  "Ushbu bot sizga o‘yinda ishtirok etish uchun promo-kodlarni ro‘yxatdan o‘tkazishda yordam beradi!\n"
-                  "Iltimos, tilni tanlang")
-    markup = ReplyKeyboardBuilder()
-    markup.add(
-        *(KeyboardButton(text=lang) for lang in languages)
-    )
+
     if not user.language or not user.phone or not user.fullname:
+        today = date.today()
+        today_promotion = await Promotion.objects.filter(
+            start_date__lte=today, end_date__gte=today, is_active=True).afirst()
+        description_ru = ""
+        description_uz = ""
+        if today_promotion:
+            description_ru += today_promotion.description_ru
+            description_uz += today_promotion.description_uz
+        hello_text = (today_promotion.description_ru +
+                      "\nПожалуйста, выберите язык\n\n" +
+                      description_uz +
+                      "\nIltimos, tilni tanlang")
+        markup = ReplyKeyboardBuilder()
+        markup.add(
+            *(KeyboardButton(text=lang) for lang in languages)
+        )
         await message.answer(hello_text, reply_markup=markup.adjust(2).as_markup(resize_keyboard=True))
         await state.set_state(Registration.language)
         await state.set_data({"promo": promo})
+    elif promo is not None:
+        await send_registered_message(message, promo)
     else:
         await message.answer(str(_("Вы можете выбрать что-то!")))  # TODO: add replymarkup for menu buttons
 

@@ -40,3 +40,11 @@ class TelegramUser(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.id}, {self.fullname}"
+
+    class Meta:
+        verbose_name = _("Телеграм пользователь")
+        verbose_name_plural = _("Телеграм пользователи")
