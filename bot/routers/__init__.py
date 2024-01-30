@@ -1,6 +1,8 @@
 from aiogram import Router
 
-from .test import router as test_router
+from .register import router as test_router
+from .echo import router as echo_router
 
 router = Router()
 router.include_router(test_router)
+router.include_router(echo_router)

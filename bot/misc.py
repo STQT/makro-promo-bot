@@ -8,10 +8,9 @@ from bot.utils.storage import DjangoRedisStorage
 
 from bot.utils.middlewares import authentication, i18n
 
-dp = Dispatcher(storage=DjangoRedisStorage())
 bot_session = AiohttpSession()
-
 bot = Bot(settings.BOT_TOKEN, parse_mode='HTML', session=bot_session)
+dp = Dispatcher(storage=DjangoRedisStorage(bot))
 
 dp.include_router(router)
 dp.update.outer_middleware.register(authentication.AuthenticationMiddleware())

@@ -34,8 +34,9 @@ class TelegramUser(models.Model):
                                         editable=False,
                                         auto_created=False
                                         )
+    language = models.CharField(_("Язык пользователя"), max_length=2, blank=True, null=True)
     fullname = models.CharField(_("Имя пользователя"), max_length=100, blank=True, null=True)
     phone = models.CharField(_("Телефонный номер"), max_length=20, blank=True, null=True)
 
-    created_at = ...
-    updated_at = ...
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

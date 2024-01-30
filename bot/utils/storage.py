@@ -11,15 +11,18 @@ from redis.typing import ExpiryT
 class DjangoRedisStorage(BaseStorage):
     def __init__(
             self,
+            bot,
             key_builder: Optional[KeyBuilder] = None,
             state_ttl: Optional[ExpiryT] = None,
             data_ttl: Optional[ExpiryT] = None,
+
     ):
         if key_builder is None:
             key_builder = DefaultKeyBuilder()
         self.key_builder = key_builder
         self.state_ttl = state_ttl
         self.data_ttl = data_ttl
+        self.bot = bot
 
     async def set_state(self, key: StorageKey, state: StateType = None) -> None:
         redis_key = self.key_builder.build(key, "state")
@@ -39,25 +42,25 @@ class DjangoRedisStorage(BaseStorage):
             return value.decode("utf-8")
         return cast(Optional[str], value)
 
-    async def set_data(self, bot: Bot, key: StorageKey, data: Dict[str, Any]) -> None:
+    async def set_data(self, key: StorageKey, data: Dict[str, Any]) -> None:
         redis_key = self.key_builder.build(key, "data")
         if not data:
             await cache.adelete(redis_key)
             return
         await cache.aset(
             redis_key,
-            bot.session.json_dumps(data),
+            self.bot.session.json_dumps(data),
             self.data_ttl,
         )
 
-    async def get_data(self, bot: Bot, key: StorageKey) -> Dict[str, Any]:
+    async def get_data(self, key: StorageKey) -> Dict[str, Any]:
         redis_key = self.key_builder.build(key, "data")
         value = await cache.aget(redis_key)
         if value is None:
             return {}
         if isinstance(value, bytes):
             value = value.decode("utf-8")
-        return cast(Dict[str, Any], bot.session.json_loads(value))
+        return cast(Dict[str, Any], self.bot.session.json_loads(value))
 
     async def close(self) -> None:
         await cache.aclose()

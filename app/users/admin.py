@@ -5,8 +5,10 @@ from django.contrib.auth import get_user_model, decorators
 from django.utils.translation import gettext_lazy as _
 
 from app.users.forms import UserAdminChangeForm, UserAdminCreationForm
+from app.users.models import TelegramUser
 
 User = get_user_model()
+
 
 @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):
@@ -31,3 +33,8 @@ class UserAdmin(auth_admin.UserAdmin):
     )
     list_display = ["username", "name", "is_superuser"]
     search_fields = ["name"]
+
+
+@admin.register(TelegramUser)
+class TelegramUserAdmin(admin.ModelAdmin):
+    ...

@@ -13,10 +13,7 @@ class AuthenticationMiddleware(BaseMiddleware):
         if bot_user is None:
             return await handler(event, data)
 
-        user, _ = await TelegramUser.objects.aget_or_create(id=bot_user.id,
-                                                            defaults={
-                                                                'fullname': bot_user.fullname
-                                                            })
+        user, _ = await TelegramUser.objects.aget_or_create(id=bot_user.id)
         data['user'] = user
 
         return await handler(event, data)

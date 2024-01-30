@@ -312,5 +312,5 @@ SPECTACULAR_SETTINGS = {
 # ------------------------------------------------------------------------------
 LIFESPAN_CONTEXT = 'config.lifespan.lifespan_context'
 DJANGO_SETTINGS_MODULE = 'config.settings.local' if DEBUG else 'config.settings.production'
-BOT_TOKEN = "5179900499:AAErx5n-g5hl6NSAYYcMKYAyGYcYs4UN2RY"
-BOT_WEBHOOK_PATH = "bot-process-updates"
+BOT_TOKEN = "6394563338:AAFoLEOnFjebAo6ucE9nTLbpEiKSj9l26iI"
+BOT_WEBHOOK_PATH = "bot_process_updates"
