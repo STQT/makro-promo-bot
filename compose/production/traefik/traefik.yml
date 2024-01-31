@@ -31,7 +31,7 @@ certificatesResolvers:
 http:
   routers:
     web-secure-router:
-      rule: 'Host(`promo.makromarket.uz`)'
+      rule: 'Host(`promo.itlink.uz`)'
       entryPoints:
         - web-secure
       middlewares:
@@ -42,7 +42,7 @@ http:
         certResolver: letsencrypt
 
     flower-secure-router:
-      rule: 'Host(`promo.makromarket.uz`)'
+      rule: 'Host(`promo.itlink.uz`)'
       entryPoints:
         - flower
       service: flower
@@ -51,7 +51,7 @@ http:
         certResolver: letsencrypt
 
     web-media-router:
-      rule: 'Host(`promo.makromarket.uz`) && PathPrefix(`/media/`)'
+      rule: 'Host(`promo.itlink.uz`) && PathPrefix(`/media/`)'
       entryPoints:
         - web-secure
       middlewares:
