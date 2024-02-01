@@ -5,6 +5,7 @@ from aiogram.types import Message, ReplyKeyboardRemove
 from django.utils.translation import gettext_lazy as _
 from app.promotions.models import Promotion, PromotionCode
 from bot.validators import validate_code
+from app.users.models import TelegramUser as User
 
 
 @dataclass
@@ -47,6 +48,15 @@ async def send_registered_message(message: Message, promo):
             reply_markup=ReplyKeyboardRemove()  # TODO: add replymarkup for menu buttons
         )
     elif created == RegisterPromo.ERROR:
-        await message.answer(str(_("Неверный промо-код!")), reply_markup=ReplyKeyboardRemove())
+        await message.answer(str(_("Неправильное значение промо кода. \n"
+                                   "Пожалуйста, перепроверьте введенный промо-код и введите значение заново.")),
+                             reply_markup=ReplyKeyboardRemove())
     else:
         await message.answer(str(_("Не найдена активная акция на сегодня")), reply_markup=ReplyKeyboardRemove())
+
+
+async def get_all_user_promocodes(user: User):
+    codes = []
+    async for code in PromotionCode.objects.filter(user=user).select_related("promotion"):
+        codes.append(code)
+    return codes

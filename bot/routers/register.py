@@ -11,10 +11,10 @@ from app.promotions.models import Promotion
 from bot.filters.states import Registration
 from app.users.models import TelegramUser as User
 from bot.functions import send_registered_message
-from bot.utils.kbs import contact_kb, language_kb, languages
+from bot.utils.contents import no_promo_code
+from bot.utils.kbs import contact_kb, language_kb, languages, menu_kb
 
 router = Router()
-
 
 
 @router.message(Command("start"))
@@ -32,18 +32,20 @@ async def on_start(message: types.Message, command: CommandObject, state: FSMCon
         if today_promotion:
             description_ru += today_promotion.description_ru
             description_uz += today_promotion.description_uz
-        hello_text = (today_promotion.description_ru +
-                      "\nПожалуйста, выберите язык\n\n" +
-                      description_uz +
-                      "\nIltimos, tilni tanlang")
+            hello_text = (description_ru +
+                          "\nПожалуйста, выберите язык\n\n" +
+                          description_uz +
+                          "\nIltimos, tilni tanlang")
 
-        await message.answer(hello_text, reply_markup=language_kb())
-        await state.set_state(Registration.language)
-        await state.set_data({"promo": promo})
+            await message.answer(hello_text, reply_markup=language_kb())
+            await state.set_state(Registration.language)
+            await state.set_data({"promo": promo})
+        else:
+            await message.answer(no_promo_code)
     elif promo is not None:
         await send_registered_message(message, promo)
     else:
-        await message.answer(str(_("Вы можете выбрать что-то!")))  # TODO: add replymarkup for menu buttons
+        await message.answer(str(_("Вы можете выбрать что-то!")), reply_markup=menu_kb())
 
 
 @router.message(Registration.language)
@@ -93,4 +95,6 @@ async def registration_finish(message: types.Message, state: FSMContext, user: U
             await send_registered_message(message, promo)
         await state.clear()
     else:
-        await message.answer(str(_("Неправильно отправлен номер. Используйте кнопку ниже")), reply_markup=contact_kb())
+        await message.answer(str(_("Неправильно указан номер телефона. \n"
+                                   "Пожалуйста, введите номер телефона в формате +998 хх ххх хх хх")),
+                             reply_markup=contact_kb())

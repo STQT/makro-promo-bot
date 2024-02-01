@@ -1,0 +1,494 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-01 23:02+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+#: app/promotions/admin.py:16
+msgid "Основная информация"
+msgstr ""
+
+#: app/promotions/admin.py:19
+msgid "Даты проведения"
+msgstr ""
+
+#: app/promotions/models.py:9
+msgid "Название"
+msgstr ""
+
+#: app/promotions/models.py:10
+msgid "Описание"
+msgstr ""
+
+#: app/promotions/models.py:11
+msgid "Дата начала"
+msgstr ""
+
+#: app/promotions/models.py:12
+msgid "Дата окончания"
+msgstr ""
+
+#: app/promotions/models.py:13
+msgid "Активна"
+msgstr ""
+
+#: app/promotions/models.py:16 app/promotions/models.py:35
+msgid "Промо-акция"
+msgstr ""
+
+#: app/promotions/models.py:17
+msgid "Промо-акции"
+msgstr ""
+
+#: app/promotions/models.py:30
+msgid "Для указанного периода уже существует активная акция."
+msgstr ""
+
+#: app/promotions/models.py:36
+msgid "Пользователь"
+msgstr ""
+
+#: app/promotions/models.py:37 app/promotions/models.py:41
+msgid "Код промо-акции"
+msgstr ""
+
+#: app/promotions/models.py:38
+msgid "Дата создания"
+msgstr ""
+
+#: app/promotions/models.py:42
+msgid "Коды промо-акции"
+msgstr ""
+
+#: app/templates/account/account_inactive.html:6
+#: app/templates/account/account_inactive.html:9
+msgid "Account Inactive"
+msgstr ""
+
+#: app/templates/account/account_inactive.html:10
+msgid "This account is inactive."
+msgstr ""
+
+#: app/templates/account/email.html:8
+msgid "Account"
+msgstr ""
+
+#: app/templates/account/email.html:11
+msgid "E-mail Addresses"
+msgstr ""
+
+#: app/templates/account/email.html:13
+msgid "The following e-mail addresses are associated with your account:"
+msgstr ""
+
+#: app/templates/account/email.html:28
+msgid "Verified"
+msgstr ""
+
+#: app/templates/account/email.html:30
+msgid "Unverified"
+msgstr ""
+
+#: app/templates/account/email.html:33
+msgid "Primary"
+msgstr ""
+
+#: app/templates/account/email.html:41
+msgid "Make Primary"
+msgstr ""
+
+#: app/templates/account/email.html:44
+msgid "Re-send Verification"
+msgstr ""
+
+#: app/templates/account/email.html:47
+msgid "Remove"
+msgstr ""
+
+#: app/templates/account/email.html:53
+msgid "Warning:"
+msgstr ""
+
+#: app/templates/account/email.html:53
+msgid ""
+"You currently do not have any e-mail address set up. You should really add "
+"an e-mail address so you can receive notifications, reset your password, etc."
+msgstr ""
+
+#: app/templates/account/email.html:56
+msgid "Add E-mail Address"
+msgstr ""
+
+#: app/templates/account/email.html:60
+msgid "Add E-mail"
+msgstr ""
+
+#: app/templates/account/email.html:67
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr ""
+
+#: app/templates/account/email_confirm.html:7
+#: app/templates/account/email_confirm.html:10
+msgid "Confirm E-mail Address"
+msgstr ""
+
+#: app/templates/account/email_confirm.html:14
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s."
+msgstr ""
+
+#: app/templates/account/email_confirm.html:19
+msgid "Confirm"
+msgstr ""
+
+#: app/templates/account/email_confirm.html:24
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a "
+"href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+
+#: app/templates/account/login.html:8 app/templates/account/login.html:11
+#: app/templates/account/login.html:50 app/templates/base.html:97
+msgid "Sign In"
+msgstr ""
+
+#: app/templates/account/login.html:15
+msgid "Please sign in with one of your existing third party accounts:"
+msgstr ""
+
+#: app/templates/account/login.html:17
+#, python-format
+msgid ""
+"Or, <a href=\"%(signup_url)s\">sign up</a> for a %(site_name)s account and "
+"sign in below:"
+msgstr ""
+
+#: app/templates/account/login.html:27
+msgid "or"
+msgstr ""
+
+#: app/templates/account/login.html:33
+#, python-format
+msgid ""
+"If you have not created an account yet, then please <a "
+"href=\"%(signup_url)s\">sign up</a> first."
+msgstr ""
+
+#: app/templates/account/login.html:49
+msgid "Forgot Password?"
+msgstr ""
+
+#: app/templates/account/logout.html:6 app/templates/account/logout.html:9
+#: app/templates/account/logout.html:18 app/templates/base.html:86
+msgid "Sign Out"
+msgstr ""
+
+#: app/templates/account/logout.html:10
+msgid "Are you sure you want to sign out?"
+msgstr ""
+
+#: app/templates/account/password_change.html:7
+#: app/templates/account/password_change.html:10
+#: app/templates/account/password_change.html:16
+#: app/templates/account/password_reset_from_key.html:7
+#: app/templates/account/password_reset_from_key.html:14
+#: app/templates/account/password_reset_from_key_done.html:6
+#: app/templates/account/password_reset_from_key_done.html:9
+msgid "Change Password"
+msgstr ""
+
+#: app/templates/account/password_reset.html:8
+#: app/templates/account/password_reset.html:11
+#: app/templates/account/password_reset_done.html:7
+#: app/templates/account/password_reset_done.html:10
+msgid "Password Reset"
+msgstr ""
+
+#: app/templates/account/password_reset.html:16
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you "
+"an e-mail allowing you to reset it."
+msgstr ""
+
+#: app/templates/account/password_reset.html:25
+msgid "Reset My Password"
+msgstr ""
+
+#: app/templates/account/password_reset.html:27
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr ""
+
+#: app/templates/account/password_reset_done.html:15
+msgid ""
+"We have sent you an e-mail. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: app/templates/account/password_reset_from_key.html:12
+msgid "Bad Token"
+msgstr ""
+
+#: app/templates/account/password_reset_from_key.html:20
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
+msgstr ""
+
+#: app/templates/account/password_reset_from_key.html:30
+msgid "change password"
+msgstr ""
+
+#: app/templates/account/password_reset_from_key.html:33
+#: app/templates/account/password_reset_from_key_done.html:10
+msgid "Your password is now changed."
+msgstr ""
+
+#: app/templates/account/password_set.html:7
+#: app/templates/account/password_set.html:10
+#: app/templates/account/password_set.html:19
+msgid "Set Password"
+msgstr ""
+
+#: app/templates/account/signup.html:7
+msgid "Signup"
+msgstr ""
+
+#: app/templates/account/signup.html:10 app/templates/account/signup.html:25
+#: app/templates/base.html:92
+msgid "Sign Up"
+msgstr ""
+
+#: app/templates/account/signup.html:12
+#, python-format
+msgid ""
+"Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgstr ""
+
+#: app/templates/account/signup_closed.html:6
+#: app/templates/account/signup_closed.html:9
+msgid "Sign Up Closed"
+msgstr ""
+
+#: app/templates/account/signup_closed.html:10
+msgid "We are sorry, but the sign up is currently closed."
+msgstr ""
+
+#: app/templates/account/verification_sent.html:6
+#: app/templates/account/verification_sent.html:9
+#: app/templates/account/verified_email_required.html:6
+#: app/templates/account/verified_email_required.html:9
+msgid "Verify Your E-mail Address"
+msgstr ""
+
+#: app/templates/account/verification_sent.html:11
+msgid ""
+"We have sent an e-mail to you for verification. Follow the link provided to "
+"finalize the signup process. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: app/templates/account/verified_email_required.html:12
+msgid ""
+"This part of the site requires us to verify that\n"
+"you are who you claim to be. For this purpose, we require that you\n"
+"verify ownership of your e-mail address. "
+msgstr ""
+
+#: app/templates/account/verified_email_required.html:17
+msgid ""
+"We have sent an e-mail to you for\n"
+"verification. Please click on the link inside this e-mail. Please\n"
+"contact us if you do not receive it within a few minutes."
+msgstr ""
+
+#: app/templates/account/verified_email_required.html:22
+#, python-format
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
+"mail address</a>."
+msgstr ""
+
+#: app/templates/admin/index.html:7 app/templates/admin/index.html:12
+msgid "Dashboard"
+msgstr ""
+
+#: app/templates/admin/index.html:11
+msgid "Home"
+msgstr ""
+
+#: app/templates/base.html:82
+msgid "My Profile"
+msgstr ""
+
+#: app/users/admin.py:19
+msgid "Personal info"
+msgstr ""
+
+#: app/users/admin.py:21
+msgid "Permissions"
+msgstr ""
+
+#: app/users/admin.py:32
+msgid "Important dates"
+msgstr ""
+
+#: app/users/apps.py:7
+msgid "Users"
+msgstr ""
+
+#: app/users/forms.py:22 app/users/tests/test_forms.py:35
+msgid "This username has already been taken."
+msgstr ""
+
+#: app/users/models.py:16
+msgid "Name of User"
+msgstr ""
+
+#: app/users/models.py:31
+msgid "Телеграм ID"
+msgstr ""
+
+#: app/users/models.py:37
+msgid "Язык пользователя"
+msgstr ""
+
+#: app/users/models.py:38
+msgid "Имя пользователя"
+msgstr ""
+
+#: app/users/models.py:39
+msgid "Телефонный номер"
+msgstr ""
+
+#: app/users/models.py:49
+msgid "Телеграм пользователь"
+msgstr ""
+
+#: app/users/models.py:50
+msgid "Телеграм пользователи"
+msgstr ""
+
+#: app/users/tasks.py:53
+msgid ""
+"Завершите регистрацию, чтобы участвовать в розыгрыше. \n"
+"Это займет всего несколько минут."
+msgstr ""
+
+#: app/users/tasks.py:59
+msgid ""
+"Вы забыли указать Ваше имя! \n"
+"Пожалуйста, заполните его для продолжения регистрации."
+msgstr ""
+
+#: app/users/tasks.py:65
+msgid ""
+"Остался всего один шаг! \n"
+"Введите номер телефона, чтобы завершить регистрацию и ввести промо-код для "
+"участия в розыгрыше."
+msgstr ""
+
+#: app/users/tests/test_views.py:71
+msgid "Information successfully updated"
+msgstr ""
+
+#: bot/functions.py:40
+msgid "Ваш промокод успешно зарегистрирован!"
+msgstr ""
+
+#: bot/functions.py:46
+msgid "Ваш промокод уже имеется в нашей базе!"
+msgstr ""
+
+#: bot/functions.py:50
+msgid "Неверный промо-код!"
+msgstr ""
+
+#: bot/functions.py:52
+msgid "Не найдена активная акция на сегодня"
+msgstr ""
+
+#: bot/routers/echo.py:26 bot/routers/menu.py:23
+msgid "Отправьте правильный промокод"
+msgstr ""
+
+#: bot/routers/register.py:45
+msgid "Вы можете выбрать что-то!"
+msgstr ""
+
+#: bot/routers/register.py:54
+msgid ""
+"Пожалуйста, введите свое имя и фамилию.\n"
+"❗️Обращаем Ваше внимание – имя и фамилия должны соответствовать документам."
+msgstr ""
+
+#: bot/routers/register.py:58
+msgid "Неправильная команда"
+msgstr ""
+
+#: bot/routers/register.py:73 bot/utils/kbs.py:13 bot/utils/kbs.py:27
+msgid "Отправить телефон"
+msgstr ""
+
+#: bot/routers/register.py:74
+msgid ""
+"Введите Ваш контактный номер телефона регистрации промо-кода.В случае "
+"выигрыша приза, мы будем связываться с Вами по указанному номеру телефона."
+msgstr ""
+
+#: bot/routers/register.py:89
+msgid ""
+"Вы успешно зарегистрировались в платформе! Отправьте промокод сюда чтобы "
+"зарегистрировать его"
+msgstr ""
+
+#: bot/routers/register.py:95
+msgid "Неправильно отправлен номер. Используйте кнопку ниже"
+msgstr ""
+
+#: bot/utils/kbs.py:6
+msgid "Ozbek tili"
+msgstr ""
+
+#: bot/utils/kbs.py:7
+msgid "Русский язык"
+msgstr ""
+
+#: bot/utils/kbs.py:28
+msgid "Отправить телефон2"
+msgstr ""
+
+#: bot/utils/kbs.py:29
+msgid "Отправить телефон3"
+msgstr ""
+
+#: bot/utils/kbs.py:30
+msgid "Отправить телефон4"
+msgstr ""
+
+#: config/settings/base.py:32
+msgid "Русский"
+msgstr ""
+
+#: config/settings/base.py:33
+msgid "O'zbek"
+msgstr ""
