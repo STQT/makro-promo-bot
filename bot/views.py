@@ -10,8 +10,14 @@ def process_update(request, token: str):
     if token == bot.token:
         body_unicode = request.body.decode('utf-8')
         update = json.loads(body_unicode)
-        loop = asyncio.get_event_loop()
-        loop.create_task(dp.feed_raw_update(bot, update))
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+        # Run the coroutine in the event loop
+        loop.run_until_complete(dp.feed_raw_update(bot, update))
+
+        # Close the event loop
+        loop.close()
         return HttpResponse(status=200)
     return HttpResponse(status=400)
 
