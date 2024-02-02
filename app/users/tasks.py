@@ -1,20 +1,17 @@
 from django.utils import timezone
-from django.db.models import Q
-from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from asgiref.sync import async_to_sync
 from celery import shared_task
 
-from aiogram import Bot
 from aiogram.types import ReplyKeyboardRemove
-from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.exceptions import TelegramForbiddenError
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.base import StorageKey
 
 from bot.filters.states import Registration
 from app.users.models import TelegramUser
+from bot.misc import bot, bot_session
 from bot.utils.kbs import contact_kb, language_kb
 from bot.utils.storage import DjangoRedisStorage
 
@@ -28,8 +25,6 @@ def get_users_count():
 
 
 async def return_hello():
-    bot_session = AiohttpSession()
-    bot = Bot(settings.BOT_TOKEN, parse_mode='HTML', session=bot_session)
     current_time = timezone.now()
     lang = TelegramUser.objects.filter(language__isnull=True)
     phone = TelegramUser.objects.filter(phone__isnull=True)
@@ -69,7 +64,7 @@ async def return_hello():
         except TelegramForbiddenError:
             user.is_active = False
             await user.asave()
-    await bot.session.close()
+    await bot_session.close()
     return 'hello'
 
 
