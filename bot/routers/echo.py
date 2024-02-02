@@ -22,7 +22,7 @@ async def echo_handler(message: types.Message, user: User) -> None:
     """
     if message.text in menu_keyboards_list:
         if message.text == _("🆕 Ввод нового промо кода"):
-            await message.answer(str(_("Просто отправьте нам промокод")))
+            await message.answer(str(_("Отправьте нам промокод")))
         elif message.text == _("💼 Мои промо коды"):
             codes = str(_("Ваши промокоды: \n"))
             db_codes = await get_all_user_promocodes(user)
@@ -70,8 +70,8 @@ async def echo_handler(message: types.Message, user: User) -> None:
             await message.answer(str(_(
                 "<b>Полное имя:</b> {fullname}\n"
                 "<b>Номер телефона:</b> {phone}").format(fullname=user.fullname, phone=user.phone)))
+    else:
+        if validate_code(message):
+            await send_registered_message(message, message.text)
         else:
-            if validate_code(message):
-                await send_registered_message(message, message.text)
-            else:
-                await message.answer(str(_("Отправьте правильный промокод")))
+            await message.answer(str(_("Отправьте правильный промокод")))

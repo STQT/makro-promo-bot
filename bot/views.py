@@ -1,8 +1,7 @@
 import json
-
 from django.http import HttpResponse
 
-from .misc import dp, bot
+from bot.misc import dp, bot
 
 
 async def process_update(request, token: str):

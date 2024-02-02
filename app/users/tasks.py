@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
@@ -10,10 +11,19 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.base import StorageKey
 
 from bot.filters.states import Registration
-from app.users.models import TelegramUser
 from bot.misc import bot, bot_session
 from bot.utils.kbs import contact_kb, language_kb
 from bot.utils.storage import DjangoRedisStorage
+
+import json
+import time
+
+import requests
+from celery import shared_task
+from celery.utils.log import get_task_logger
+from django.conf import settings
+from django.db.models import F
+from app.users.models import TelegramUser, Notification, PeriodicallyNotification
 
 User = get_user_model()
 
@@ -71,3 +81,95 @@ async def return_hello():
 @shared_task()
 def sync_task():
     async_to_sync(return_hello)()
+
+
+api_token = settings.BOT_TOKEN
+base_url = f'https://api.telegram.org/bot{api_token}'
+SEND_MEDIA_GROUP = f"https://api.telegram.org/bot{api_token}/sendMediaGroup"
+
+logger = get_task_logger(__name__)
+
+
+def send_media_group(text, chat_id, media):
+    files = {}
+    media_list = []
+    for i, img_path in enumerate(media):
+        with open(img_path, "rb") as img:
+            files[f'photo{i}'] = img.read()
+            media_list.append({'type': 'photo', 'media': f'attach://photo{i}'})
+    media_list[0]['caption'] = text
+    media_list[0]['parse_mode'] = 'HTML'
+
+    payload = {'chat_id': chat_id, 'media': json.dumps(media_list)}
+    resp = requests.post(SEND_MEDIA_GROUP, data=payload, files=files)
+    return resp.status_code
+
+
+def send_notifications_text(text, chat_id, media=None):
+    url = f'https://api.telegram.org/bot{api_token}/sendMessage'
+    data = {'chat_id': chat_id, 'text': text, 'parse_mode': 'HTML'}
+    response = requests.post(url, data=data)
+    return response.status_code
+
+
+@shared_task()
+def send_notifications_task(notification_id, text, media, offset, chunk_size, is_notification=True):
+    chunk_chats = TelegramUser.objects.filter(is_active=True).order_by('id')[offset:offset + chunk_size]
+    text = text.replace("<br />", "\n")
+    for chat in chunk_chats:
+        send_notification_bound = send_media_group if media else send_notifications_text
+        response = send_notification_bound(text=text, chat_id=chat.id, media=media)
+        time.sleep(0.035)
+        if response == 200:
+            chat.is_stopped = False  # Reset is_stopped flag if the message was sent successfully
+            chat.save()
+        else:
+            chat.is_stopped = True
+            chat.save()
+    if is_notification:
+        Notification.objects.filter(id=notification_id).update(
+            all_chats=F('all_chats') + chunk_chats.count(),
+            status=Notification.NotificationStatus.SENDED
+        )
+
+
+@shared_task()
+def scheduled_send_periodically_notification():
+    periodically_notification = PeriodicallyNotification.objects.filter(is_current=True)
+    if periodically_notification.exists():
+        periodically_notification = periodically_notification.first()
+        media = []
+        cache_path = settings.MEDIA_ROOT
+        for i in periodically_notification.periodic_shots.all():
+            compressed_image = i.image_compress.url
+            compressed_image_path = cache_path + compressed_image[len(settings.MEDIA_URL):]
+            media.append(compressed_image_path)
+        chunk_size = 1500
+        offset = 0
+
+        first_task = None
+
+        while True:
+            chunk_chats = TelegramUser.objects.filter(is_active=True).order_by('id')[offset:offset + chunk_size]
+
+            if not chunk_chats:
+                break
+
+            task = send_notifications_task.signature(
+                (periodically_notification.pk,
+                 periodically_notification.description,
+                 media,
+                 offset,
+                 chunk_size,
+                 False),
+                immutable=True)
+
+            if first_task:
+                first_task |= task
+            else:
+                first_task = task
+
+            offset += chunk_size
+        first_task.apply_async()
+        return {"message": "Periodically notifications task was started"}
+    return {"message": "No periodically notifications"}
