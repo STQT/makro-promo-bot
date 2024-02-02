@@ -20,15 +20,16 @@ dp.update.outer_middleware.register(i18n.I18Middleware())
 
 
 async def on_startup():
-    if not settings.DEBUG:
-        webhook_info = await bot.get_webhook_info()
-        webhook_url = get_webhook_url()
-        if webhook_url != webhook_info.url:
-            await bot.set_webhook(
-                url=webhook_url,
-                allowed_updates=dp.resolve_used_update_types(),
-                drop_pending_updates=True
-            )
+    print("BOT is starting", await bot.get_me())
+    # if not settings.DEBUG:
+    #     webhook_info = await bot.get_webhook_info()
+    #     webhook_url = get_webhook_url()
+    #     if webhook_url != webhook_info.url:
+    #         await bot.set_webhook(
+    #             url=webhook_url,
+    #             allowed_updates=dp.resolve_used_update_types(),
+    #             drop_pending_updates=True
+    #         )
 
 
 async def on_shutdown():
