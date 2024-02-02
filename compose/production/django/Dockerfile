@@ -79,6 +79,10 @@ COPY --chown=django:django ./compose/production/django/celery/flower/start /star
 RUN sed -i 's/\r$//g' /start-flower
 RUN chmod +x /start-flower
 
+COPY ./compose/production/bot/start /start-bot
+RUN sed -i 's/\r$//g' /start-bot
+RUN chmod +x /start-bot
+
 
 # copy application code to WORKDIR
 COPY . ${APP_HOME}
