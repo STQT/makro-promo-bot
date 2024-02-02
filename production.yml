@@ -1,10 +1,10 @@
 version: '3'
 
 volumes:
-  production_postgres_data: {}
-  production_postgres_data_backups: {}
-  production_traefik: {}
-  production_django_media: {}
+  production_postgres_data: { }
+  production_postgres_data_backups: { }
+  production_traefik: { }
+  production_django_media: { }
 
 services:
   django: &django
@@ -37,19 +37,19 @@ services:
     env_file:
       - ./.envs/.production/.postgres
 
-#  traefik:
-#    build:
-#      context: .
-#      dockerfile: ./compose/production/traefik/Dockerfile
-#    image: app_production_traefik
-#    depends_on:
-#      - django
-#    volumes:
-#      - production_traefik:/etc/traefik/acme
-#    ports:
-#      - '0.0.0.0:9001:80'
-#      - '0.0.0.0:9002:443'
-#      - '0.0.0.0:9003:5555'
+  #  traefik:
+  #    build:
+  #      context: .
+  #      dockerfile: ./compose/production/traefik/Dockerfile
+  #    image: app_production_traefik
+  #    depends_on:
+  #      - django
+  #    volumes:
+  #      - production_traefik:/etc/traefik/acme
+  #    ports:
+  #      - '0.0.0.0:9001:80'
+  #      - '0.0.0.0:9002:443'
+  #      - '0.0.0.0:9003:5555'
 
   redis:
     image: docker.io/redis:6
@@ -72,6 +72,15 @@ services:
     command: /start-flower
     ports:
       - "5081:5555"
+  bot:
+    <<: *django
+    image: app_production_python_bot
+    container_name: app_local_python_bot
+    depends_on:
+      - redis
+      - postgres
+    ports: [ ]
+    command: /start-bot
 
 #  nginx:
 #    build:
