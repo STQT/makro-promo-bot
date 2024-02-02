@@ -1,3 +1,5 @@
+import asyncio
+
 from aiogram import Dispatcher, Bot
 from aiogram.client.session.aiohttp import AiohttpSession
 from django.conf import settings
