@@ -166,3 +166,6 @@ SPECTACULAR_SETTINGS["SERVERS"] = [  # noqa: F405
 ]
 # Your stuff...
 # ------------------------------------------------------------------------------
+CSRF_TRUSTED_ORIGINS = [
+    "https://bot.makromarket.uz"
+]
