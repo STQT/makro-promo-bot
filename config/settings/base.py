@@ -64,7 +64,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 # APPS
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
-    "jazzmin",
     "modeltranslation",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -72,6 +71,7 @@ DJANGO_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "jazzmin",
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
     "django.forms",
