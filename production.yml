@@ -58,16 +58,20 @@ services:
     <<: *django
     image: app_production_celeryworker
     command: /start-celeryworker
+    ports: [ ]
 
   celerybeat:
     <<: *django
     image: app_production_celerybeat
     command: /start-celerybeat
+    ports: [ ]
 
   flower:
     <<: *django
     image: app_production_flower
     command: /start-flower
+    ports:
+      - "5081:5555"
 
 #  nginx:
 #    build:
