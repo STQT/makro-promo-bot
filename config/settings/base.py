@@ -60,6 +60,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 ROOT_URLCONF = "config.urls"
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = "config.wsgi.application"
+ASGI_APPLICATION = "config.asgi.application"
 
 # APPS
 # ------------------------------------------------------------------------------
@@ -71,7 +72,6 @@ DJANGO_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "jazzmin",
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
     "django.forms",
@@ -324,7 +324,8 @@ SPECTACULAR_SETTINGS = {
 LIFESPAN_CONTEXT = 'config.lifespan.lifespan_context'
 DJANGO_SETTINGS_MODULE = 'config.settings.local' if DEBUG else 'config.settings.production'
 BOT_TOKEN = "6394563338:AAFoLEOnFjebAo6ucE9nTLbpEiKSj9l26iI"
-BOT_WEBHOOK_PATH = "bot_process_updates"
+BOT_WEBHOOK_PATH = "bot"
+HOST = "https://bot.makromarket.uz"
 
 JAZZMIN_SETTINGS = {
     "navigation_expanded": True,
