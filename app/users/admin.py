@@ -2,6 +2,7 @@ from django.contrib.auth import admin as auth_admin
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
+from django import forms
 from django.contrib import admin
 
 from app.users.models import Notification, NotificationShots, PeriodicallyNotification, PeriodicallyNotificationShots
@@ -11,6 +12,9 @@ from django.utils.safestring import mark_safe
 
 from app.users.forms import UserAdminChangeForm, UserAdminCreationForm
 from app.users.models import TelegramUser
+
+from .forms import CustomCKEditorWidget
+from django.template.defaultfilters import striptags
 
 User = get_user_model()
 
@@ -55,10 +59,27 @@ class PeriodicallyNotificationShotsInline(admin.TabularInline):
     model = PeriodicallyNotificationShots
 
 
+class NotificationAdminForm(forms.ModelForm):
+    description = forms.CharField(widget=CustomCKEditorWidget())
+
+    class Meta:
+        model = Notification
+        fields = '__all__'
+
+
+class PeriodicallyNotificationForm(forms.ModelForm):
+    description = forms.CharField(widget=CustomCKEditorWidget())
+
+    class Meta:
+        model = PeriodicallyNotification
+        fields = '__all__'
+
+
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
     list_display = ["short_description", "display_image", "all_chats_count", "created_at", "tools_column"]
     inlines = [NotificationShotsInline]
+    form = NotificationAdminForm
 
     def tools_column(self, obj):
         html_tag = "В процессе"
@@ -75,7 +96,8 @@ class NotificationAdmin(admin.ModelAdmin):
     tools_column.allow_tags = True
 
     def short_description(self, obj):
-        return obj.description[:100] + "..." if len(obj.description) > 100 else obj.description
+        descr = striptags(obj.description)
+        return descr[:100] + "..."
 
     short_description.short_description = "Описание"
 
@@ -108,14 +130,16 @@ class NotificationAdmin(admin.ModelAdmin):
 class PeriodicallyNotificationAdmin(admin.ModelAdmin):
     list_display = ["short_description", "display_image", "is_current"]
     inlines = [PeriodicallyNotificationShotsInline]
+    form = PeriodicallyNotificationForm
 
     def short_description(self, obj):
-        return obj.description[:100] + "..." if len(obj.description) > 100 else obj.description
+        descr = striptags(obj.description)
+        return descr[:100] + "..."
 
     short_description.short_description = "Описание"
 
     def display_image(self, obj):
-        images = obj.notificationshots_set
+        images = obj.periodic_shots
         image = None
         if images.exists():
             image = images.first()

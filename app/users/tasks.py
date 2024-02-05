@@ -1,29 +1,28 @@
-from django.conf import settings
+import json
+import time
+import requests
+from urllib.parse import unquote
+
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from asgiref.sync import async_to_sync
-from celery import shared_task
 
 from aiogram.types import ReplyKeyboardRemove
 from aiogram.exceptions import TelegramForbiddenError
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.base import StorageKey
 
-from bot.filters.states import Registration
-from bot.misc import bot, bot_session
-from bot.utils.kbs import contact_kb, language_kb
-from bot.utils.storage import DjangoRedisStorage
-
-import json
-import time
-
-import requests
 from celery import shared_task
 from celery.utils.log import get_task_logger
 from django.conf import settings
 from django.db.models import F
+
 from app.users.models import TelegramUser, Notification, PeriodicallyNotification
+from bot.utils.storage import DjangoRedisStorage
+from bot.filters.states import Registration
+from bot.misc import bot, bot_session
+from bot.utils.kbs import contact_kb, language_kb
 
 User = get_user_model()
 
@@ -93,10 +92,18 @@ logger = get_task_logger(__name__)
 def send_media_group(text, chat_id, media):
     files = {}
     media_list = []
-    for i, img_path in enumerate(media):
-        with open(img_path, "rb") as img:
-            files[f'photo{i}'] = img.read()
-            media_list.append({'type': 'photo', 'media': f'attach://photo{i}'})
+    for i, img_path_encoded in enumerate(media):
+        img_path = unquote(img_path_encoded)
+        try:
+            with open(img_path, "rb") as img:
+                files[f'photo{i}'] = img.read()
+                media_list.append({'type': 'photo', 'media': f'attach://photo{i}'})
+        except FileNotFoundError:
+            print(f"File not found: {img_path}. Skipping...")
+            continue
+    if not media_list:
+        print("No valid files found. Aborting send_media_group.")
+        return None
     media_list[0]['caption'] = text
     media_list[0]['parse_mode'] = 'HTML'
 
@@ -120,11 +127,8 @@ def send_notifications_task(notification_id, text, media, offset, chunk_size, is
         send_notification_bound = send_media_group if media else send_notifications_text
         response = send_notification_bound(text=text, chat_id=chat.id, media=media)
         time.sleep(0.035)
-        if response == 200:
-            chat.is_stopped = False  # Reset is_stopped flag if the message was sent successfully
-            chat.save()
-        else:
-            chat.is_stopped = True
+        if response != 200:
+            chat.is_active = False  # Reset is_stopped flag if the message was sent successfully
             chat.save()
     if is_notification:
         Notification.objects.filter(id=notification_id).update(
@@ -144,7 +148,7 @@ def scheduled_send_periodically_notification():
             compressed_image = i.image_compress.url
             compressed_image_path = cache_path + compressed_image[len(settings.MEDIA_URL):]
             media.append(compressed_image_path)
-        chunk_size = 1500
+        chunk_size = 200
         offset = 0
 
         first_task = None
