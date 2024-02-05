@@ -1,10 +1,7 @@
-import asyncio
-
 from aiogram import Dispatcher, Bot
 from aiogram.client.session.aiohttp import AiohttpSession
 from django.conf import settings
 
-from bot.helpers import get_webhook_url
 from bot.routers import router
 from bot.utils.storage import DjangoRedisStorage
 

@@ -28,3 +28,4 @@ django-import-export==3.3.6
 django-jazzmin==2.6.0
 django-ckeditor==6.7.0
 django-imagekit==5.0.0
+phonenumbers==8.13.29

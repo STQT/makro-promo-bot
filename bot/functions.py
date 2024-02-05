@@ -4,6 +4,7 @@ from datetime import date
 from aiogram.types import Message, ReplyKeyboardRemove
 from django.utils.translation import gettext_lazy as _
 from app.promotions.models import Promotion, PromotionCode
+from bot.utils.kbs import menu_kb
 from bot.validators import validate_code
 from app.users.models import TelegramUser as User
 
@@ -34,25 +35,25 @@ async def register_promo(message, code):
     return RegisterPromo.ERROR
 
 
-async def send_registered_message(message: Message, promo):
+async def send_registered_message(message: Message, promo, lang='ru'):
     created = await register_promo(message, promo)
     if created == RegisterPromo.CREATED:
         await message.answer(
             str(_("Ваш промокод успешно зарегистрирован!")),
-            reply_markup=ReplyKeyboardRemove()
+            reply_markup=menu_kb(lang)
             # TODO: add replymarkup for menu buttons
         )
     elif created == RegisterPromo.REGISTERED:
         await message.answer(
             str(_("Ваш промокод уже имеется в нашей базе!")),
-            reply_markup=ReplyKeyboardRemove()  # TODO: add replymarkup for menu buttons
+            reply_markup=menu_kb(lang)  # TODO: add replymarkup for menu buttons
         )
     elif created == RegisterPromo.ERROR:
         await message.answer(str(_("Неправильное значение промо кода. \n"
                                    "Пожалуйста, перепроверьте введенный промо-код и введите значение заново.")),
-                             reply_markup=ReplyKeyboardRemove())
+                             reply_markup=menu_kb(lang))
     else:
-        await message.answer(str(_("Не найдена активная акция на сегодня")), reply_markup=ReplyKeyboardRemove())
+        await message.answer(str(_("Не найдена активная акция на сегодня")), reply_markup=menu_kb(lang))
 
 
 async def get_all_user_promocodes(user: User):

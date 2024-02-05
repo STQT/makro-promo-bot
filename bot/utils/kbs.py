@@ -6,15 +6,14 @@ languages = (
     str(_("🇺🇿 O'zbek tili")),
     str(_("🇷🇺 Русский язык"))
 )
-
-menu_keyboards_list = (
-    str(_("🆕 Ввод нового промо кода")),
-    str(_("💼 Мои промо коды")),
-    str(_("🎁 Узнать текущую акцию")),
-    str(_("🌐 Социальные сети")),
-    str(_("👤 Личный кабинет")),
-    str(_("📜 Правила акции")),
-)
+menu_keyboards_dict = {
+    "ru": ("🆕 Ввод нового промо кода", "💼 Мои промо коды",
+           "🎁 Узнать текущую акцию", "🌐 Социальные сети",
+           "👤 Личный кабинет", "📜 Правила акции"),
+    "uz": ("🆕 Yangi promokod kiritish", "💼 Promokodlarim",
+           "🎁 Joriy aksiya bilan tanishish", "🌐 Ijtimoiy tarmoqlar",
+           "👤 Shaxsiy kabinet", "📜 Aksiya qoidalari")
+}
 
 
 def contact_kb():
@@ -31,9 +30,9 @@ def language_kb():
     return markup.adjust(2).as_markup(resize_keyboard=True)
 
 
-def menu_kb():
+def menu_kb(language_code='ru'):
     markup = ReplyKeyboardBuilder()
     markup.add(
-        *(KeyboardButton(text=menu) for menu in menu_keyboards_list)
+        *(KeyboardButton(text=menu) for menu in menu_keyboards_dict[language_code])
     )
     return markup.adjust(2).as_markup(resize_keyboard=True)
