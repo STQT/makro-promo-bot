@@ -8,9 +8,11 @@ from app.users.models import TelegramUser
 class Promotion(models.Model):
     name = models.CharField(_("Название"), max_length=100)
     description = models.TextField(_("Описание"))
+    mask = models.CharField(_("Начальные символы (маска)"))
     start_date = models.DateField(_("Дата начала"))
     end_date = models.DateField(_("Дата окончания"))
     is_active = models.BooleanField(_("Активна"), default=True)
+    conditions = models.TextField(_("Условия"))
 
     class Meta:
         verbose_name = _("Промо-акция")

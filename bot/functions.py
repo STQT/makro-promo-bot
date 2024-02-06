@@ -17,36 +17,34 @@ class RegisterPromo:
     NO_PROMOTION = 4
 
 
-async def register_promo(message, code):
-    if validate_code(message, code):
-        today = date.today()
-        today_promotion = await Promotion.objects.filter(
-            start_date__lte=today, end_date__gte=today, is_active=True).afirst()
-        if today_promotion:
-            promo, created = await PromotionCode.objects.aget_or_create(
-                code=code,
-                defaults={
-                    "user_id": message.from_user.id,
-                    "promotion": today_promotion})
-            if created:
-                return RegisterPromo.CREATED
-            return RegisterPromo.REGISTERED
-        return RegisterPromo.NO_PROMOTION
+async def register_promo(message, code, promo_id=None):
+    if promo_id is not None:  # Checking validated
+        is_valid, promo_id = await validate_code(message, code)
+    else:
+        is_valid = True
+    if is_valid:
+        promo, created = await PromotionCode.objects.aget_or_create(
+            code=code,
+            defaults={
+                "user_id": message.from_user.id,
+                "promotion_id": promo_id})
+        if created:
+            return RegisterPromo.CREATED
+        return RegisterPromo.REGISTERED
     return RegisterPromo.ERROR
 
 
-async def send_registered_message(message: Message, promo, lang='ru'):
-    created = await register_promo(message, promo)
+async def send_registered_message(message: Message, promo, lang='ru', promo_id=None):
+    created = await register_promo(message, promo, promo_id)
     if created == RegisterPromo.CREATED:
         await message.answer(
             str(_("Ваш промокод успешно зарегистрирован!")),
             reply_markup=menu_kb(lang)
-            # TODO: add replymarkup for menu buttons
         )
     elif created == RegisterPromo.REGISTERED:
         await message.answer(
             str(_("Ваш промокод уже имеется в нашей базе!")),
-            reply_markup=menu_kb(lang)  # TODO: add replymarkup for menu buttons
+            reply_markup=menu_kb(lang)
         )
     elif created == RegisterPromo.ERROR:
         await message.answer(str(_("Неправильное значение промо кода. \n"

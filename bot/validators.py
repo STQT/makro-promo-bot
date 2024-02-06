@@ -1,12 +1,18 @@
 from aiogram.types import Message
 
+from app.promotions.models import Promotion
 
-def validate_code(message: Message, code: str = None):
+
+async def validate_code(message: Message, code: str = None):
     if message.text:
         if code is None:
             code = message.text
+        today_promotions = await Promotion.objects.filter(is_active=True)
+        promos = []
+        async for promo in today_promotions:
+            promos.append((promo.id, promo.mask))
 
-        ...  # TODO: check this code after
-        if code.startswith("test"):
-            return True
-    return False
+        for promo_id, promo_mask in promos:
+            if code.startswith(promo_mask):
+                return True, promo_id
+    return False, 0

@@ -88,7 +88,8 @@ async def echo_handler(message: types.Message, user: User) -> None:
                 "<b>Полное имя:</b> {fullname}\n"
                 "<b>Номер телефона:</b> {phone}").format(fullname=user.fullname, phone=user.phone)))
     else:
-        if validate_code(message):
-            await send_registered_message(message, message.text, user.language)
+        is_valid, promo_id = await validate_code(message)
+        if is_valid:
+            await send_registered_message(message, message.text, user.language, promo_id)
         else:
             await message.answer(str(_("Отправьте правильный промокод")))
