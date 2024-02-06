@@ -137,43 +137,43 @@ def send_notifications_task(notification_id, text, media, offset, chunk_size, is
         )
 
 
-@shared_task()
-def scheduled_send_periodically_notification():
-    periodically_notification = PeriodicallyNotification.objects.filter(is_current=True)
-    if periodically_notification.exists():
-        periodically_notification = periodically_notification.first()
-        media = []
-        cache_path = settings.MEDIA_ROOT
-        for i in periodically_notification.periodic_shots.all():
-            compressed_image = i.image_compress.url
-            compressed_image_path = cache_path + compressed_image[len(settings.MEDIA_URL):]
-            media.append(compressed_image_path)
-        chunk_size = 200
-        offset = 0
-
-        first_task = None
-
-        while True:
-            chunk_chats = TelegramUser.objects.filter(is_active=True).order_by('id')[offset:offset + chunk_size]
-
-            if not chunk_chats:
-                break
-
-            task = send_notifications_task.signature(
-                (periodically_notification.pk,
-                 periodically_notification.description,
-                 media,
-                 offset,
-                 chunk_size,
-                 False),
-                immutable=True)
-
-            if first_task:
-                first_task |= task
-            else:
-                first_task = task
-
-            offset += chunk_size
-        first_task.apply_async()
-        return {"message": "Periodically notifications task was started"}
-    return {"message": "No periodically notifications"}
+# @shared_task()
+# def scheduled_send_periodically_notification():
+#     periodically_notification = PeriodicallyNotification.objects.filter(is_current=True)
+#     if periodically_notification.exists():
+#         periodically_notification = periodically_notification.first()
+#         media = []
+#         cache_path = settings.MEDIA_ROOT
+#         for i in periodically_notification.periodic_shots.all():
+#             compressed_image = i.image_compress.url
+#             compressed_image_path = cache_path + compressed_image[len(settings.MEDIA_URL):]
+#             media.append(compressed_image_path)
+#         chunk_size = 200
+#         offset = 0
+#
+#         first_task = None
+#
+#         while True:
+#             chunk_chats = TelegramUser.objects.filter(is_active=True).order_by('id')[offset:offset + chunk_size]
+#
+#             if not chunk_chats:
+#                 break
+#
+#             task = send_notifications_task.signature(
+#                 (periodically_notification.pk,
+#                  periodically_notification.description,
+#                  media,
+#                  offset,
+#                  chunk_size,
+#                  False),
+#                 immutable=True)
+#
+#             if first_task:
+#                 first_task |= task
+#             else:
+#                 first_task = task
+#
+#             offset += chunk_size
+#         first_task.apply_async()
+#         return {"message": "Periodically notifications task was started"}
+#     return {"message": "No periodically notifications"}

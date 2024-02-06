@@ -8,11 +8,11 @@ languages = (
 )
 menu_keyboards_dict = {
     "ru": ("🆕 Ввод нового промо кода", "💼 Мои промо коды",
-           "🎁 Узнать текущую акцию", "🌐 Социальные сети",
-           "👤 Личный кабинет", "📜 Правила акции"),
+           "🎁 Об акции", "🌐 Социальные сети",
+           "👤 Личный кабинет"),
     "uz": ("🆕 Yangi promokod kiritish", "💼 Promokodlarim",
-           "🎁 Joriy aksiya bilan tanishish", "🌐 Ijtimoiy tarmoqlar",
-           "👤 Shaxsiy kabinet", "📜 Aksiya qoidalari")
+           "🎁 Aksiya haqida", "🌐 Ijtimoiy tarmoqlar",
+           "👤 Shaxsiy kabinet")
 }
 
 

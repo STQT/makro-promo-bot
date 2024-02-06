@@ -25,26 +25,12 @@ async def on_start(message: types.Message, command: CommandObject, state: FSMCon
         promo = command.args
 
     if not user.language or not user.phone or not user.fullname:
-        today = date.today()
-        today_promotion = await Promotion.objects.filter(
-            start_date__lte=today, end_date__gte=today, is_active=True).afirst()
-        description_ru = ""
-        description_uz = ""
-        if today_promotion:
-            description_ru += today_promotion.description_ru
-            description_uz += today_promotion.description_uz
-            hello_text = (description_ru +
-                          "\nПожалуйста, выберите язык\n\n" +
-                          description_uz +
-                          "\nIltimos, tilni tanlang")
+        hello_text = ("Пожалуйста, выберите язык\n"
+                      "Iltimos, tilni tanlang")
 
-            await message.answer(hello_text, reply_markup=language_kb())
-            await state.set_state(Registration.language)
-            await state.set_data({"promo": promo})
-        else:
-            no_promo_code = str(_("Сейчас нет активных акций! "
-                                  "Как только появится акция мы Вас обязательно уведомим"))
-            await message.answer(no_promo_code)
+        await message.answer(hello_text, reply_markup=language_kb())
+        await state.set_state(Registration.language)
+        await state.set_data({"promo": promo})
     elif promo is not None:
         await send_registered_message(message, promo, user.language)
     else:
@@ -89,6 +75,7 @@ async def registration_phone(message: types.Message, state: FSMContext, user: Us
 async def registration_finish(message: types.Message, state: FSMContext, user: User):
     error_text = str(_("Неправильно указан номер телефона. \n"
                        "Пожалуйста, введите номер телефона в формате +998 хх ххх хх хх"))
+    print(message)
     if message.contact:
         user.phone = message.contact.phone_number
         await user.asave()
@@ -96,10 +83,10 @@ async def registration_finish(message: types.Message, state: FSMContext, user: U
         formatted_phone = format_phone_number(message.text)
 
         if len(formatted_phone) == 13:
-            parsed_number = phonenumbers.parse("+" + formatted_phone, None)
+            parsed_number = phonenumbers.parse(formatted_phone)
             is_valid = phonenumbers.is_valid_number(parsed_number)
             if is_valid:
-                user.phone = message.contact.phone_number
+                user.phone = formatted_phone
                 await user.asave()
             else:
                 await message.answer(error_text, reply_markup=contact_kb())
@@ -116,7 +103,7 @@ async def registration_finish(message: types.Message, state: FSMContext, user: U
         await message.answer(
             str(_(
                 "Вы успешно зарегистрировались в платформе! Отправьте промокод сюда чтобы зарегистрировать его")),
-            reply_markup=menu_kb(user.language))  # TODO: need to change main menu buttons
+            reply_markup=menu_kb(user.language))
     else:
         await send_registered_message(message, promo, user.language)
     await state.clear()

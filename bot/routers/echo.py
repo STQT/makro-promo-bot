@@ -23,7 +23,6 @@ async def echo_handler(message: types.Message, user: User) -> None:
     activate(user.language)
 
     if message.text in menu_text_list:
-        print(message.text in ("🆕 Ввод нового промо кода", "🆕 Yangi promokod kiritish"))
         if message.text in ("🆕 Ввод нового промо кода", "🆕 Yangi promokod kiritish"):
             await message.answer(str(_("Отправьте нам промокод")))
         elif message.text in ("💼 Мои промо коды", "💼 Promokodlarim"):
@@ -65,24 +64,22 @@ async def echo_handler(message: types.Message, user: User) -> None:
                   "<a href='https://google.com'>Телеграм</a>")
             )
             await message.answer(socials)
-        elif message.text in ("🎁 Узнать текущую акцию", "🎁 Joriy aksiya bilan tanishish"):
-            today = date.today()
-            today_promotion = await Promotion.objects.filter(
-                start_date__lte=today, end_date__gte=today, is_active=True).afirst()
-            print(today_promotion)
-            if today_promotion:
-                await message.answer(today_promotion.name + "\n\n" + today_promotion.description)
+        elif message.text in ("🎁 Об акции", "🎁 Aksiya haqida"):
+            today_promotion = Promotion.objects.filter(is_active=True)
+            promotion = []
+            async for promo in today_promotion:
+                promotion.append(promo)
+            if promotion:
+                for i in promotion:
+                    await message.answer(
+                        "☑️ " + i.name + "\n\n" +
+                        "ℹ️ " + i.description + "\n\n" +
+                        "📅 " + i.start_date.strftime('%d-%m-%Y %H:%M:%S') + "\n" +
+                        "📅 " + i.end_date.strftime('%d-%m-%Y %H:%M:%S'))
             else:
                 no_promo_code = str(_("Сейчас нет активных акций! "
                                       "Как только появится акция мы Вас обязательно уведомим"))
                 await message.answer(no_promo_code)
-        elif message.text in ("📜 Правила акции", "📜 Aksiya qoidalari"):
-            rules = str(
-                _(
-                    "Правила использования платформы"
-                )
-            )
-            await message.answer(rules)
         elif message.text in ("👤 Личный кабинет", "👤 Shaxsiy kabinet"):
             await message.answer(str(_(
                 "<b>Полное имя:</b> {fullname}\n"

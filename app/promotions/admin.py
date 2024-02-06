@@ -4,28 +4,25 @@ from django.utils.translation import gettext_lazy as _
 
 from modeltranslation.admin import TabbedTranslationAdmin
 
+from import_export import resources, fields
+
 from app.promotions.models import Promotion, PromotionCode
 
 
 @admin.register(Promotion)
 class PromotionAdmin(TabbedTranslationAdmin):
-    list_display = ('name', 'start_date', 'end_date', 'is_active')
+    list_display = ('name', 'mask', 'start_date', 'end_date', 'is_active')
     date_hierarchy = 'start_date'  # Add date hierarchy for start_date
 
     fieldsets = (
         (_("Основная информация"), {
-            'fields': ('name', 'description', 'is_active'),
+            'fields': ('name', 'description', 'is_active', "mask"),
         }),
         (_("Даты проведения"), {
             'fields': ('start_date', 'end_date'),
         }
          )
     )
-
-
-from import_export.admin import ExportActionMixin
-
-from import_export import resources, fields
 
 
 class PromotionCodeResource(resources.ModelResource):

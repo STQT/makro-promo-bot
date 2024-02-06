@@ -18,7 +18,7 @@ class RegisterPromo:
 
 
 async def register_promo(message, code, promo_id=None):
-    if promo_id is not None:  # Checking validated
+    if promo_id is None:  # Checking validated
         is_valid, promo_id = await validate_code(message, code)
     else:
         is_valid = True
