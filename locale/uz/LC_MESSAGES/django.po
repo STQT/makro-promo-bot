@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-07 06:47+0500\n"
+"POT-Creation-Date: 2024-02-07 21:13+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -504,27 +504,29 @@ msgstr ""
 msgid "Отправьте правильный промокод"
 msgstr "To‘g‘ri promokod yuboring"
 
-#: bot/routers/register.py:37
+#: bot/routers/register.py:42
 msgid "Выберите раздел"
 msgstr "Bo‘limni tanlang"
 
-#: bot/routers/register.py:48
+#: bot/routers/register.py:53
 msgid ""
 "Пожалуйста, введите свое имя и фамилию.\n"
-"❗️Обращаем Ваше внимание – имя и фамилия должны соответствовать документам."
+"❗️Обращаем Ваше внимание – имя и фамилия должны соответствовать "
+"удостоверению вашей личности."
 msgstr ""
 "Iltimos, ismingiz va familiyangizni kiriting.\n"
-"❗️E'tibor bering - ismingiz va familiyangiz shaxsingizni tasdiqlovchi hujjatga mos kelishi kerak."
+"❗️E'tibor bering - ismingiz va familiyangiz shaxsingizni tasdiqlovchi "
+"hujjatga mos kelishi kerak."
 
-#: bot/routers/register.py:52
+#: bot/routers/register.py:58
 msgid "Неправильная команда"
 msgstr "Noto‘gri buyruq"
 
-#: bot/routers/register.py:67 bot/utils/kbs.py:21
+#: bot/routers/register.py:73 bot/utils/kbs.py:21
 msgid "Отправить телефон"
 msgstr "Telefon yuborish"
 
-#: bot/routers/register.py:68
+#: bot/routers/register.py:74
 msgid ""
 "Введите Ваш контактный номер телефона регистрации промо-кода. В случае "
 "выигрыша приза, мы будем связываться с Вами по указанному номеру телефона."
@@ -533,7 +535,7 @@ msgstr ""
 "siz sovrin yutib olsangiz, ko‘rsatilgan telefon raqami orqali siz bilan "
 "bog‘lanamiz."
 
-#: bot/routers/register.py:76
+#: bot/routers/register.py:82
 msgid ""
 "Неправильно указан номер телефона. \n"
 "Пожалуйста, введите номер телефона в формате +998 хх ххх хх хх"
@@ -542,7 +544,7 @@ msgstr ""
 "kiriting.Telefon raqami noto‘g‘ri. Telefon raqamini +998 xx xxx xx xx "
 "formatida kiriting"
 
-#: bot/routers/register.py:105
+#: bot/routers/register.py:110
 msgid ""
 "Вы успешно зарегистрировались в платформе! Отправьте промокод сюда чтобы "
 "зарегистрировать его"
