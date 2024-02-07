@@ -514,7 +514,7 @@ msgid ""
 "❗️Обращаем Ваше внимание – имя и фамилия должны соответствовать документам."
 msgstr ""
 "Iltimos, ismingiz va familiyangizni kiriting.\n"
-"❗️Iltimos, ism va familiyangiz hujjatlarga mos kelishi kerakligini unutmang."
+"❗️E'tibor bering - ismingiz va familiyangiz shaxsingizni tasdiqlovchi hujjatga mos kelishi kerak."
 
 #: bot/routers/register.py:52
 msgid "Неправильная команда"
