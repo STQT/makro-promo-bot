@@ -111,7 +111,7 @@ class NotificationAdmin(admin.ModelAdmin):
         image = None
         if images.exists():
             image = images.first()
-        img_html = f'<img src="{image.image.url}" width="50" height="50" />' if image else '<div>Rasmsiz</div>'
+        img_html = f'<img src="{image.image.url}" width="50" height="50" />' if image else '<div>Без изображения</div>'
         return mark_safe(img_html)
 
     display_image.short_description = "Изображение"
@@ -143,7 +143,7 @@ class PeriodicallyNotificationAdmin(admin.ModelAdmin):
         image = None
         if images.exists():
             image = images.first()
-        img_html = f'<img src="{image.image.url}" width="50" height="50" />' if image else '<div>Rasmsiz</div>'
+        img_html = f'<img src="{image.image.url}" width="50" height="50" />' if image else '<div>Без изображения</div>'
         return mark_safe(img_html)
 
     display_image.short_description = "Изображение"

@@ -53,7 +53,6 @@ class TelegramUser(models.Model):
         verbose_name_plural = _("Телеграм пользователи")
 
 
-
 class Notification(models.Model):
     class NotificationStatus(models.IntegerChoices):
         CREATED = 0, "Создан"

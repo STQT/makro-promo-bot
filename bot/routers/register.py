@@ -1,5 +1,3 @@
-from datetime import date
-
 import phonenumbers
 from aiogram import Router, types
 from aiogram.filters import Command, CommandObject
@@ -8,7 +6,6 @@ from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from django.utils.translation import gettext_lazy as _, activate
 from aiogram.types import KeyboardButton, ReplyKeyboardRemove
 
-from app.promotions.models import Promotion
 from bot.filters.states import Registration
 from app.users.models import TelegramUser as User
 from bot.functions import send_registered_message
@@ -56,13 +53,6 @@ async def registration_language(message: types.Message, state: FSMContext, user:
                              reply_markup=ReplyKeyboardRemove())
     else:
         await message.answer(str(_("Неправильная команда")))
-
-
-# @router.message(Command("registration"))
-# async def start_register_user(message: types.Message, state: FSMContext):
-#     await message.reply(str(_("Ismingizni kiriting:")))
-#     await state.set_state(Registration.fio)
-#     ...  # Register
 
 
 @router.message(Registration.fio)

@@ -1,9 +1,8 @@
 from dataclasses import dataclass
-from datetime import date
 
-from aiogram.types import Message, ReplyKeyboardRemove
+from aiogram.types import Message
 from django.utils.translation import gettext_lazy as _
-from app.promotions.models import Promotion, PromotionCode
+from app.promotions.models import PromotionCode
 from bot.utils.kbs import menu_kb
 from bot.validators import validate_code
 from app.users.models import TelegramUser as User
