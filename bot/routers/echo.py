@@ -1,6 +1,5 @@
-from datetime import date
-
 from aiogram import Router, types
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 from django.utils.translation import gettext_lazy as _, activate
 
 from app.promotions.models import Promotion
@@ -65,17 +64,25 @@ async def echo_handler(message: types.Message, user: User) -> None:
             )
             await message.answer(socials)
         elif message.text in ("🎁 Об акции", "🎁 Aksiya haqida"):
-            today_promotion = Promotion.objects.filter(is_active=True)
-            promotion = []
-            async for promo in today_promotion:
-                promotion.append(promo)
-            if promotion:
-                for i in promotion:
+
+            promotions = Promotion.objects.filter(is_active=True)
+            promos = []
+            async for promo in promotions:
+                promos.append(promo)
+            if promos:
+                for i in promos:
+                    builder = InlineKeyboardBuilder()
+                    builder.add(types.InlineKeyboardButton(
+                        text=str(_("Условия акции")),
+                        callback_data=f"about_{i.id}")
+                    )
                     await message.answer(
                         "☑️ " + i.name + "\n\n" +
                         "ℹ️ " + i.description + "\n\n" +
                         "📅 " + i.start_date.strftime('%d-%m-%Y %H:%M:%S') + "\n" +
-                        "📅 " + i.end_date.strftime('%d-%m-%Y %H:%M:%S'))
+                        "📅 " + i.end_date.strftime('%d-%m-%Y %H:%M:%S'),
+                        reply_markup=builder.as_markup()
+                    )
             else:
                 no_promo_code = str(_("Сейчас нет активных акций! "
                                       "Как только появится акция мы Вас обязательно уведомим"))

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-05 21:10+0500\n"
+"POT-Creation-Date: 2024-02-07 06:47+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: app/promotions/admin.py:16
+#: app/promotions/admin.py:18
 msgid "Основная информация"
 msgstr ""
 
-#: app/promotions/admin.py:19
+#: app/promotions/admin.py:21
 msgid "Даты проведения"
 msgstr ""
 
@@ -35,42 +35,50 @@ msgid "Описание"
 msgstr ""
 
 #: app/promotions/models.py:11
-msgid "Дата начала"
+msgid "Начальные символы (маска)"
 msgstr ""
 
 #: app/promotions/models.py:12
-msgid "Дата окончания"
+msgid "Дата начала"
 msgstr ""
 
 #: app/promotions/models.py:13
+msgid "Дата окончания"
+msgstr ""
+
+#: app/promotions/models.py:14
 msgid "Активна"
 msgstr ""
 
-#: app/promotions/models.py:16 app/promotions/models.py:35
+#: app/promotions/models.py:15
+msgid "Условия"
+msgstr ""
+
+#: app/promotions/models.py:18 app/promotions/models.py:37
 msgid "Промо-акция"
 msgstr ""
 
-#: app/promotions/models.py:17
+#: app/promotions/models.py:19
 msgid "Промо-акции"
 msgstr ""
 
-#: app/promotions/models.py:30
+#: app/promotions/models.py:32
 msgid "Для указанного периода уже существует активная акция."
 msgstr ""
 
-#: app/promotions/models.py:36
+#: app/promotions/models.py:38
 msgid "Пользователь"
 msgstr ""
 
-#: app/promotions/models.py:37 app/promotions/models.py:41
+#: app/promotions/models.py:39 app/promotions/models.py:43
 msgid "Код промо-акции"
 msgstr ""
 
-#: app/promotions/models.py:38
+#: app/promotions/models.py:40
 msgid "Дата создания"
 msgstr ""
 
-#: app/promotions/models.py:42
+#: app/promotions/models.py:44
 msgid "Коды промо-акции"
 msgstr ""
 
@@ -354,15 +362,15 @@ msgstr ""
 msgid "Unknown content"
 msgstr ""
 
-#: app/users/admin.py:24
+#: app/users/admin.py:28
 msgid "Personal info"
 msgstr ""
 
-#: app/users/admin.py:26
+#: app/users/admin.py:30
 msgid "Permissions"
 msgstr ""
 
-#: app/users/admin.py:37
+#: app/users/admin.py:41
 msgid "Important dates"
 msgstr ""
 
@@ -370,7 +378,7 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: app/users/forms.py:22 app/users/tests/test_forms.py:35
+#: app/users/forms.py:24 app/users/tests/test_forms.py:35
 msgid "This username has already been taken."
 msgstr ""
 
@@ -402,19 +410,19 @@ msgstr ""
 msgid "Телеграм пользователи"
 msgstr ""
 
-#: app/users/tasks.py:58
+#: app/users/tasks.py:57
 msgid ""
 "Завершите регистрацию, чтобы участвовать в розыгрыше. \n"
 "Это займет всего несколько минут."
 msgstr ""
 
-#: app/users/tasks.py:64
+#: app/users/tasks.py:63
 msgid ""
 "Вы забыли указать Ваше имя! \n"
 "Пожалуйста, заполните его для продолжения регистрации."
 msgstr ""
 
-#: app/users/tasks.py:70
+#: app/users/tasks.py:69
 msgid ""
 "Остался всего один шаг! \n"
 "Введите номер телефона, чтобы завершить регистрацию и ввести промо-код для "
@@ -425,15 +433,15 @@ msgstr ""
 msgid "Information successfully updated"
 msgstr ""
 
-#: bot/functions.py:42
+#: bot/functions.py:41
 msgid "Ваш промокод успешно зарегистрирован!"
 msgstr "Sizning promokodingiz muvaffaqiyatli ro‘yxatdan o'tdi!"
 
-#: bot/functions.py:48
+#: bot/functions.py:46
 msgid "Ваш промокод уже имеется в нашей базе!"
 msgstr "Ushbu promokod allaqachon ro‘yxatdan o'tgan!"
 
-#: bot/functions.py:52
+#: bot/functions.py:50
 msgid ""
 "Неправильное значение промо кода. \n"
 "Пожалуйста, перепроверьте введенный промо-код и введите значение заново."
@@ -441,23 +449,27 @@ msgstr ""
 "Promokod noto‘g‘ri. \n"
 "Kiritilgan  promokodni yana bir bor tekshiring va qayta kiriting."
 
-#: bot/functions.py:56
+#: bot/functions.py:54
 msgid "Не найдена активная акция на сегодня"
 msgstr "Bugunga faol aksiya mavjud emas"
 
-#: bot/routers/echo.py:28
+#: bot/routers/callback.py:24
+msgid "Отсутствует"
+msgstr "Mavjud emas"
+
+#: bot/routers/echo.py:26
 msgid "Отправьте нам промокод"
 msgstr "Promokod yuboring"
 
-#: bot/routers/echo.py:30 bot/routers/echo.py:52
+#: bot/routers/echo.py:28 bot/routers/echo.py:50
 msgid "Ваши промокоды: \n"
 msgstr "Sizning promokodlaringiz: \n"
 
-#: bot/routers/echo.py:59
+#: bot/routers/echo.py:57
 msgid "К сожалению, у Вас нет зарегистрированных промо кодов"
 msgstr "Kechirasiz, Sizda ro‘yxatdan o‘tgan promokdlar mavjud emas"
 
-#: bot/routers/echo.py:62
+#: bot/routers/echo.py:60
 msgid ""
 "Наши социальные сети \n"
 "<a href='https://google.com'>Фейсбук</a> | <a href='https://google."
@@ -467,7 +479,11 @@ msgstr ""
 "<a href='https://google.com'>Facebook</a> | <a href='https://google."
 "com'>Instagram</a> | <a href='https://google.com'>Telegram</a>"
 
-#: bot/routers/echo.py:76 bot/routers/register.py:45
+#: bot/routers/echo.py:76
+msgid "Условия акции"
+msgstr "Aksiya shartlari"
+
+#: bot/routers/echo.py:87
 msgid ""
 "Сейчас нет активных акций! Как только появится акция мы Вас обязательно "
 "уведомим"
@@ -475,11 +491,7 @@ msgstr ""
 "Hozirda faol aksiyalar mavjud emas! Aksiya paydo bo'lishi bilan sizga ushbu "
 "aksiya haqida xabar beramiz"
 
-#: bot/routers/echo.py:82
-msgid "Правила использования платформы"
-msgstr "Platformadan foyalanish qoidalari"
-
-#: bot/routers/echo.py:88
+#: bot/routers/echo.py:92
 #, python-brace-format
 msgid ""
 "<b>Полное имя:</b> {fullname}\n"
@@ -488,15 +500,15 @@ msgstr ""
 "<b>To‘liq ism:</b> {fullname}\n"
 "<b>Telefon raqam:</b> {phone}"
 
-#: bot/routers/echo.py:94
+#: bot/routers/echo.py:99
 msgid "Отправьте правильный промокод"
 msgstr "To‘g‘ri promokod yuboring"
 
-#: bot/routers/register.py:51
+#: bot/routers/register.py:37
 msgid "Выберите раздел"
 msgstr "Bo‘limni tanlang"
 
-#: bot/routers/register.py:62
+#: bot/routers/register.py:48
 msgid ""
 "Пожалуйста, введите свое имя и фамилию.\n"
 "❗️Обращаем Ваше внимание – имя и фамилия должны соответствовать документам."
@@ -504,15 +516,15 @@ msgstr ""
 "Iltimos, ismingiz va familiyangizni kiriting.\n"
 "❗️Iltimos, ism va familiyangiz hujjatlarga mos kelishi kerakligini unutmang."
 
-#: bot/routers/register.py:66
+#: bot/routers/register.py:52
 msgid "Неправильная команда"
 msgstr "Noto‘gri buyruq"
 
-#: bot/routers/register.py:81 bot/utils/kbs.py:21
+#: bot/routers/register.py:67 bot/utils/kbs.py:21
 msgid "Отправить телефон"
 msgstr "Telefon yuborish"
 
-#: bot/routers/register.py:82
+#: bot/routers/register.py:68
 msgid ""
 "Введите Ваш контактный номер телефона регистрации промо-кода. В случае "
 "выигрыша приза, мы будем связываться с Вами по указанному номеру телефона."
@@ -521,7 +533,7 @@ msgstr ""
 "siz sovrin yutib olsangiz, ko‘rsatilgan telefon raqami orqali siz bilan "
 "bog‘lanamiz."
 
-#: bot/routers/register.py:90
+#: bot/routers/register.py:76
 msgid ""
 "Неправильно указан номер телефона. \n"
 "Пожалуйста, введите номер телефона в формате +998 хх ххх хх хх"
@@ -530,7 +542,7 @@ msgstr ""
 "kiriting.Telefon raqami noto‘g‘ri. Telefon raqamini +998 xx xxx xx xx "
 "formatida kiriting"
 
-#: bot/routers/register.py:118
+#: bot/routers/register.py:105
 msgid ""
 "Вы успешно зарегистрировались в платформе! Отправьте промокод сюда чтобы "
 "зарегистрировать его"
