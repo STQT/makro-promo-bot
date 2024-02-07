@@ -12,7 +12,7 @@ class ASGIHandler(_ASGIHandler):
     async def __call__(self, scope, receive, send):
         assert scope["type"] in ("http", "lifespan")
         if scope["type"] == "lifespan":
-            await self.lifespan(scope, receive, send)
+            # await self.lifespan(scope, receive, send)
             return
         async with ThreadSensitiveContext():
             await self.handle(scope, receive, send)
