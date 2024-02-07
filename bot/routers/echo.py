@@ -1,3 +1,5 @@
+from datetime import date
+
 from aiogram import Router, types
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from django.utils.translation import gettext_lazy as _, activate
@@ -64,8 +66,9 @@ async def echo_handler(message: types.Message, user: User) -> None:
             )
             await message.answer(socials)
         elif message.text in ("🎁 Об акции", "🎁 Aksiya haqida"):
-
-            promotions = Promotion.objects.filter(is_active=True)
+            today = date.today()
+            promotions = Promotion.objects.filter(
+                start_date__lte=today, end_date__gte=today, is_active=True)
             promos = []
             async for promo in promotions:
                 promos.append(promo)
