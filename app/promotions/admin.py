@@ -16,7 +16,7 @@ class PromotionAdmin(TabbedTranslationAdmin):
 
     fieldsets = (
         (_("Основная информация"), {
-            'fields': ('name', 'description', 'is_active', "mask"),
+            'fields': ('name', 'description', 'is_active', "mask", "conditions"),
         }),
         (_("Даты проведения"), {
             'fields': ('start_date', 'end_date'),
