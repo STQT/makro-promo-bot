@@ -21,16 +21,16 @@ class Promotion(models.Model):
     def __str__(self):
         return self.name
 
-    def clean(self):
-        existing_promotion = Promotion.objects.filter(
-            start_date__lte=self.end_date,
-            end_date__gte=self.start_date,
-        ).exclude(pk=self.pk)
-
-        if existing_promotion.exists():
-            raise ValidationError(
-                {'start_date': _('Для указанного периода уже существует активная акция.')}
-            )
+    # def clean(self):
+    #     existing_promotion = Promotion.objects.filter(
+    #         start_date__lte=self.end_date,
+    #         end_date__gte=self.start_date,
+    #     ).exclude(pk=self.pk)
+    #
+    #     if existing_promotion.exists():
+    #         raise ValidationError(
+    #             {'start_date': _('Для указанного периода уже существует активная акция.')}
+    #         )
 
 
 class PromotionCode(models.Model):
