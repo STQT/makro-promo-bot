@@ -23,11 +23,11 @@ async def on_start(message: types.Message, command: CommandObject, state: FSMCon
 
     if not user.language or not user.phone or not user.fullname:
         hello_text = ("Вас приветствует бот сети супермаркетов Makro! Этот бот поможет "
-                      "Вам в регистрации промо-кодов для участия в розыгрыше. "
+                      "Вам в регистрации промокодов для участия в розыгрыше. "
                       "Для дальнейшей регистрации выберите пожалуйста язык.\n"
                       "Makro supermarketlar tarmog'ining boti sizni qutlaydi! "
                       "Ushbu bot sizga o'yinda ishtirok etish uchun "
-                      "promo-kodlarni ro'yxatdan o'tkazishda yordam beradi. "
+                      "promokodlarni ro'yxatdan o'tkazishda yordam beradi. "
                       "Ro'yxatdan o'tish uchun tilni tanlang.")
 
         await message.answer(hello_text, reply_markup=language_kb())
@@ -97,7 +97,7 @@ async def registration_finish(message: types.Message, state: FSMContext, user: U
     if promo is None:
         await message.answer(
             str(_(
-                "Вы успешно зарегистрировались в платформе! Отправьте промокод сюда чтобы зарегистрировать его")),
+                "Вы успешно зарегистрировались на платформе! Отправьте промокод сюда, чтобы зарегистрировать его")),
             reply_markup=menu_kb(user.language))
     else:
         await send_registered_message(message, promo, user.language)
