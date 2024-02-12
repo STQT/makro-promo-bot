@@ -4,7 +4,7 @@ from .models import Promotion
 
 
 class PromotionTranslationOptions(TranslationOptions):
-    fields = ['name', 'description']
+    fields = ['name', 'description', 'conditions']
 
 
 translator.register(Promotion, PromotionTranslationOptions)
