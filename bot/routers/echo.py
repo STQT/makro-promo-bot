@@ -60,9 +60,9 @@ async def echo_handler(message: types.Message, user: User) -> None:
         elif message.text in ("🌐 Социальные сети", "🌐 Ijtimoiy tarmoqlar"):
             socials = str(
                 _("Наши социальные сети \n"
-                  "<a href='https://google.com'>Фейсбук</a> | "
-                  "<a href='https://google.com'>Инстаграм</a> | "
-                  "<a href='https://google.com'>Телеграм</a>")
+                  "<a href='https://www.facebook.com/makromarket.uz'>Facebook</a> | "
+                  "<a href='https://www.instagram.com/makro_supermarket'>Instagram</a> | "
+                  "<a href='https://t.me/makrosupermarket_uz'>Telegram</a>")
             )
             await message.answer(socials)
         elif message.text in ("🎁 Об акции", "🎁 Aksiya haqida"):
