@@ -64,7 +64,7 @@ async def echo_handler(message: types.Message, user: User) -> None:
                   "<a href='https://www.instagram.com/makro_supermarket'>Instagram</a> | "
                   "<a href='https://t.me/makrosupermarket_uz'>Telegram</a>")
             )
-            await message.answer(socials)
+            await message.answer(socials, disable_web_page_preview=True)
         elif message.text in ("🎁 Об акции", "🎁 Aksiya haqida"):
             today = date.today()
             promotions = Promotion.objects.filter(
