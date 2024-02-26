@@ -27,6 +27,7 @@ class PromotionAdmin(TabbedTranslationAdmin):
 
 class PromotionCodeResource(resources.ModelResource):
     user_phone = fields.Field(column_name='Телефон номер', attribute='user__phone/')
+    user_name = fields.Field(column_name='ФИО', attribute='user__fullname/')
     promotion_name = fields.Field(column_name='Название акции', attribute='promotion__name/')
 
     class Meta:
@@ -35,6 +36,9 @@ class PromotionCodeResource(resources.ModelResource):
 
     def dehydrate_user_phone(self, code):
         return code.user.phone
+
+    def dehydrate_user_name(self, code):
+        return code.user.fullname
 
     def dehydrate_promotion_name(self, code):
         return code.promotion.name
