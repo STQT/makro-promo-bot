@@ -119,7 +119,7 @@ def send_notifications_text(text, chat_id, media=None):
     return response.status_code
 
 
-@shared_task()
+@shared_task(time_limit=300)
 def send_notifications_task(notification_id, text, media, offset, chunk_size, is_notification=True):
     chunk_chats = TelegramUser.objects.filter(is_active=True).order_by('id')[offset:offset + chunk_size]
     text = text.replace("<br />", "\n")
