@@ -473,7 +473,7 @@ msgid ""
 "href='https://t.me/makrosupermarket_uz'>Telegram</a>"
 msgstr ""
 "Bizning ijtimoiy tarmoqlar \n"
-"<a href=''https://www.facebook.com/makromarket.uz'>Facebook</a> | <a "
+"<a href='https://www.facebook.com/makromarket.uz'>Facebook</a> | <a "
 "href='https://www.instagram.com/makro_supermarket'>Instagram</a> | <a "
 "href='https://t.me/makrosupermarket_uz'>Telegram</a>"
 
