@@ -76,8 +76,10 @@ async def registration_finish(message: types.Message, state: FSMContext, user: U
         await user.asave()
     elif message.text:
         formatted_phone = format_phone_number(message.text)
-
-        if len(formatted_phone) == 13 and formatted_phone.startswith("+998"):
+        if not formatted_phone.startswith("+998"):
+            await message.answer(_("В акции можно учавствовать с узбекистанским номером"))
+            return
+        if len(formatted_phone) == 13:
             parsed_number = phonenumbers.parse(formatted_phone)
             is_valid = phonenumbers.is_valid_number(parsed_number)
             if is_valid:

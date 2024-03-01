@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-24 17:52+0500\n"
+"POT-Creation-Date: 2024-03-01 11:16+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -323,7 +323,7 @@ msgid ""
 "contact us if you do not receive it within a few minutes."
 msgstr ""
 
-#: app/templates/account/verified_email_required.html:22
+#: app/templates/accoun```````````t/verified_email_required.html:22
 #, python-format
 msgid ""
 "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
@@ -473,9 +473,9 @@ msgid ""
 "href='https://t.me/makrosupermarket_uz'>Telegram</a>"
 msgstr ""
 "Bizning ijtimoiy tarmoqlar \n"
-"<a href=''https://www.facebook.com/makromarket.uz'>Facebook</a> | "
-"<a href='https://www.instagram.com/makro_supermarket'>Instagram</a> | "
-"<a href='https://t.me/makrosupermarket_uz'>Telegram</a>"
+"<a href=''https://www.facebook.com/makromarket.uz'>Facebook</a> | <a "
+"href='https://www.instagram.com/makro_supermarket'>Instagram</a> | <a "
+"href='https://t.me/makrosupermarket_uz'>Telegram</a>"
 
 #: bot/routers/echo.py:79
 msgid "Условия акции"
@@ -490,7 +490,6 @@ msgstr ""
 "aksiya haqida xabar beramiz"
 
 #: bot/routers/echo.py:95
-#, python-brace-format
 msgid ""
 "<b>Полное имя:</b> {fullname}\n"
 "<b>Номер телефона:</b> {phone}"
@@ -542,7 +541,11 @@ msgstr ""
 "kiriting.Telefon raqami noto‘g‘ri. Telefon raqamini +998 xx xxx xx xx "
 "formatida kiriting"
 
-#: bot/routers/register.py:100
+#: bot/routers/register.py:80
+msgid "В акции можно учавствовать с узбекистанским номером"
+msgstr "Aksiyada faqat O'zbekiston raqami ishtirok etadi"
+
+#: bot/routers/register.py:101
 msgid ""
 "Вы успешно зарегистрировались на платформе! Отправьте промокод сюда, чтобы "
 "зарегистрировать его"
