@@ -77,7 +77,7 @@ async def registration_finish(message: types.Message, state: FSMContext, user: U
     elif message.text:
         formatted_phone = format_phone_number(message.text)
 
-        if len(formatted_phone) == 13:
+        if len(formatted_phone) == 13 and formatted_phone.startswith("+998"):
             parsed_number = phonenumbers.parse(formatted_phone)
             is_valid = phonenumbers.is_valid_number(parsed_number)
             if is_valid:
