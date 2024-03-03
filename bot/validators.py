@@ -15,6 +15,6 @@ async def validate_code(message: Message, code: str = None):
         promos.append((promo.id, promo.mask))
 
     for promo_id, promo_mask in promos:
-        if code.startswith(promo_mask):
+        if code and code.startswith(promo_mask):
             return True, promo_id
     return False, 0
