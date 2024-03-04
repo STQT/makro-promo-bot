@@ -10,9 +10,9 @@ bot_sheet = bot_workbook.active
 
 # Iterate over the rows in bot.xlsx
 for i, bot_row in enumerate(bot_sheet.iter_rows(min_row=2, values_only=True), start=2):
-    bot_value = str(bot_row[2])  # Assuming the value is in the third column
+    bot_value = str(bot_row[3])  # Assuming the value is in the third column
     exists = any(bot_value == str(promo_row[0]) for promo_row in promo_sheet.iter_rows(min_row=2, values_only=True))
-    result = 'exists' if exists else 'nonexists'
+    result = 'Существует' if exists else 'Не существует'
 
     # Write the result to the fifth column
     bot_sheet.cell(row=i, column=6, value=result)
