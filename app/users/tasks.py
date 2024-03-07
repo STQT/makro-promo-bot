@@ -35,9 +35,9 @@ def get_users_count():
 
 async def return_hello():
     current_time = timezone.now()
-    lang = TelegramUser.objects.filter(language__isnull=True)
-    phone = TelegramUser.objects.filter(phone__isnull=True)
-    fullname = TelegramUser.objects.filter(fullname__isnull=True)
+    lang = TelegramUser.objects.filter(language__isnull=True, is_notified=False)
+    phone = TelegramUser.objects.filter(phone__isnull=True, is_notified=False)
+    fullname = TelegramUser.objects.filter(fullname__isnull=True, is_notified=False)
     all_active_users = lang | phone | fullname
     all_active_users = all_active_users.filter(
         is_active=True).filter(updated_at__lt=current_time - timezone.timedelta(hours=1))
@@ -70,6 +70,8 @@ async def return_hello():
                                              "Введите номер телефона, чтобы завершить регистрацию и ввести "
                                              "промо-код для участия в розыгрыше.")),
                                        reply_markup=contact_kb())
+            user.is_notified = True
+            await user.asave()
         except TelegramForbiddenError:
             user.is_active = False
             await user.asave()
