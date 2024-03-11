@@ -50,6 +50,7 @@ class PromotionCodeAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['code', 'user', 'promotion', 'created_at']
     date_hierarchy = 'created_at'
     list_filter = ['promotion']
+    search_fields = ("code",)
 
     # def has_add_permission(self, request):
     #     return False
