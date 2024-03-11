@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from rest_framework.generics import RetrieveAPIView
 
-# Create your views here.
+from app.promotions.models import PromotionCode
+from app.promotions.serializers import PromotionCodeSerializer
+
+
+class CodeAPIView(RetrieveAPIView):
+    queryset = PromotionCode.objects.select_related("user")
+    serializer_class = PromotionCodeSerializer
+    lookup_field = 'code'
