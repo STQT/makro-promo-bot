@@ -47,6 +47,7 @@ class UserAdmin(auth_admin.UserAdmin):
 @admin.register(TelegramUser)
 class TelegramUserAdmin(admin.ModelAdmin):
     list_display = ["phone", "fullname", "is_active", "language"]
+    search_fields = ['phone', 'fullname']
 
 
 class NotificationShotsInline(admin.TabularInline):
