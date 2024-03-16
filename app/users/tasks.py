@@ -133,11 +133,10 @@ def send_notifications_task(notification_id, text, media, offset, chunk_size, is
         if response != 200:
             chat.is_active = False  # Reset is_stopped flag if the message was sent successfully
             chat.save()
-    if is_last:
-        Notification.objects.filter(id=notification_id).update(
-            all_chats=F('all_chats') + chunk_chats.count(),
-            status=Notification.NotificationStatus.SENDED
-        )
+    Notification.objects.filter(id=notification_id).update(
+        all_chats=F('all_chats') + chunk_chats.count(),
+        status=Notification.NotificationStatus.SENDED if is_last else Notification.NotificationStatus.PROCEED
+    )
 
 
 # @shared_task()
