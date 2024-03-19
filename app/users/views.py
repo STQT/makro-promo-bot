@@ -35,7 +35,7 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericV
         return Response(status=status.HTTP_200_OK, data=serializer.data)
 
 
-def send_telegram(request, notification_id, user_ids=None):
+def send_telegram(request, notification_id, is_test=False):
     notification = get_object_or_404(Notification, id=notification_id)
     media = []
     cache_path = settings.MEDIA_ROOT + "/"
@@ -44,9 +44,8 @@ def send_telegram(request, notification_id, user_ids=None):
         compressed_image = i.image_compress.url
         compressed_image_path = cache_path + compressed_image[len(settings.MEDIA_URL):]
         media.append(compressed_image_path)
-
-    if user_ids is not None:
-        send_notifications_test.delay(notification.description, media)
+    if is_test is True:
+        send_notifications_test.delay(notification.description_uz, notification.description_ru, media)
         return redirect(reverse('admin:users_notification_changelist'))
 
     notification.status = notification.NotificationStatus.PROCEED
@@ -56,14 +55,14 @@ def send_telegram(request, notification_id, user_ids=None):
     all_chats_count = TelegramUser.objects.filter(is_active=True).count()
 
     first_task = None
-
     while True:
         limit = offset + chunk_size
         is_last = False
         if all_chats_count - limit <= chunk_size:
             is_last = True
         task = send_notifications_task.signature(
-            (notification_id, notification.description, media, offset, chunk_size, is_last),
+            (notification_id, notification.description_uz, notification.description_ru,
+             media, offset, chunk_size, is_last),
             immutable=True)
 
         if first_task:
