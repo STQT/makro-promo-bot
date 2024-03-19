@@ -15,7 +15,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 
 from .models import Notification
-from .tasks import send_notifications_task
+from .tasks import send_notifications_task, send_notifications_test
 
 User = get_user_model()
 
@@ -46,7 +46,7 @@ def send_telegram(request, notification_id, user_ids=None):
         media.append(compressed_image_path)
 
     if user_ids is not None:
-        send_notifications_task.delay(notification_id, notification.description, media, 0, 10, True, True)
+        send_notifications_test.delay(notification.description, media)
         return redirect(reverse('admin:users_notification_changelist'))
 
     notification.status = notification.NotificationStatus.PROCEED
