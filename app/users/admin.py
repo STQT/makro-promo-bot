@@ -5,7 +5,8 @@ from django.utils.translation import gettext_lazy as _
 from django import forms
 from django.contrib import admin
 
-from app.users.models import Notification, NotificationShots, PeriodicallyNotification, PeriodicallyNotificationShots
+from app.users.models import Notification, NotificationShots, PeriodicallyNotification, PeriodicallyNotificationShots, \
+    AdminTelegramUsers
 
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -85,12 +86,15 @@ class NotificationAdmin(admin.ModelAdmin):
     def tools_column(self, obj):
         html_tag = "В процессе"
         if obj.status == 0:
-            html_tag = '<a href="{0}" class="btn btn-success">Начать</a> '
+            html_tag = ('<a href="{test}" class="btn btn-success">Тестировать</a> '
+                        '<a href="{prod}" class="btn btn-success">Начать</a>')
         elif obj.status == 1:
             html_tag = 'Отправлено'
         return mark_safe(
             html_tag.format(
-                reverse('send_notification', args=[obj.pk]), )
+                test=reverse('send_notification_test', args=[obj.pk]),
+                prod=reverse('send_notification', args=[obj.pk]),
+            )
         )
 
     tools_column.short_description = 'Управление'
@@ -148,3 +152,8 @@ class PeriodicallyNotificationAdmin(admin.ModelAdmin):
         return mark_safe(img_html)
 
     display_image.short_description = "Изображение"
+
+
+@admin.register(AdminTelegramUsers)
+class AdminTelegramUsersAdmin(admin.ModelAdmin):
+    ...
