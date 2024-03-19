@@ -46,7 +46,7 @@ def send_telegram(request, notification_id, user_ids=None):
         media.append(compressed_image_path)
 
     if user_ids is not None:
-        send_notifications_task.delay(notification_id, notification.description, media, 0, 10, True)
+        send_notifications_task.delay(notification_id, notification.description, media, 0, 10, True, True)
         return redirect(reverse('admin:users_notification_changelist'))
 
     notification.status = notification.NotificationStatus.PROCEED
